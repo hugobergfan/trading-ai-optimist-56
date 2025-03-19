@@ -50,12 +50,12 @@ const data = [
 
 export function AppleStyleDock() {
   return (
-    <div className='absolute top-2 left-1/2 max-w-full -translate-x-1/2 z-10'>
+    <div className='fixed top-2 left-1/2 max-w-full -translate-x-1/2 z-40'>
       <Dock className='items-end pb-3'>
         {data.map((item, idx) => (
-          <Link to={item.href} key={idx}>
+          <Link to={item.href} key={idx} className="block">
             <DockItem
-              className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800'
+              className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer'
             >
               <DockLabel>{item.title}</DockLabel>
               <DockIcon>{item.icon}</DockIcon>
