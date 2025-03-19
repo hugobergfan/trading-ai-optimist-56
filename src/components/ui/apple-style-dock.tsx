@@ -57,7 +57,7 @@ export function AppleStyleDock() {
             <DockItem
               className='cursor-pointer'
             >
-              <DockLabel>{item.title}</DockLabel>
+              <DockLabel className="bg-gray-100/90 dark:bg-neutral-800/90 border-gray-300 dark:border-neutral-700 text-sm font-medium">{item.title}</DockLabel>
               <DockIcon>{item.icon}</DockIcon>
             </DockItem>
           </Link>
