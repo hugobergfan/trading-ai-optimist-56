@@ -34,18 +34,6 @@ const Navbar = () => {
             </a>
           </div>
           
-          <div className="hidden md:flex items-center gap-8">
-            <a href="/" className="navigation-link active">
-              Home
-            </a>
-            <a href="/about" className="navigation-link">
-              About
-            </a>
-            <a href="/pricing" className="navigation-link">
-              Pricing
-            </a>
-          </div>
-          
           <div className="hidden md:block">
             <Button>
               Get Started
