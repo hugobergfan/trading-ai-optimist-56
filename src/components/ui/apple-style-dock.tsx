@@ -1,12 +1,10 @@
 
 import {
-  Activity,
-  Component,
   HomeIcon,
-  Mail,
-  Package,
-  ScrollText,
-  SunMoon,
+  HelpCircle,
+  BadgeDollarSign,
+  FileText,
+  User,
 } from 'lucide-react';
 
 import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dock';
@@ -17,55 +15,41 @@ const data = [
     icon: (
       <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
     ),
-    href: '#',
+    href: '/',
   },
   {
-    title: 'Products',
+    title: 'About',
     icon: (
-      <Package className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+      <User className='h-full w-full text-neutral-600 dark:text-neutral-300' />
     ),
-    href: '#',
+    href: '/about',
   },
   {
-    title: 'Components',
+    title: 'Why Us',
     icon: (
-      <Component className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+      <HelpCircle className='h-full w-full text-neutral-600 dark:text-neutral-300' />
     ),
-    href: '#',
+    href: '/why-us',
   },
   {
-    title: 'Activity',
+    title: 'Pricing',
     icon: (
-      <Activity className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+      <BadgeDollarSign className='h-full w-full text-neutral-600 dark:text-neutral-300' />
     ),
-    href: '#',
+    href: '/pricing',
   },
   {
-    title: 'Change Log',
+    title: 'Docs',
     icon: (
-      <ScrollText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+      <FileText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
     ),
-    href: '#',
-  },
-  {
-    title: 'Email',
-    icon: (
-      <Mail className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
-    href: '#',
-  },
-  {
-    title: 'Theme',
-    icon: (
-      <SunMoon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-    ),
-    href: '#',
+    href: '/docs',
   },
 ];
 
 export function AppleStyleDock() {
   return (
-    <div className='absolute top-2 left-1/2 max-w-full -translate-x-1/2 z-50'>
+    <div className='absolute top-2 left-1/2 max-w-full -translate-x-1/2'>
       <Dock className='items-end pb-3'>
         {data.map((item, idx) => (
           <DockItem

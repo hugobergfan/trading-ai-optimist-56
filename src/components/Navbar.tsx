@@ -30,7 +30,7 @@ const Navbar = () => {
         <nav className="flex items-center justify-between">
           <div className="flex items-center">
             <a href="/" className="text-xl font-bold text-trading-blue">
-              TradingAI
+              Finox AI
             </a>
           </div>
           
