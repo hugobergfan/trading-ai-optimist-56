@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import AboutUs from "./pages/AboutUs";
 
 // Create placeholder pages for the missing routes
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -14,7 +15,6 @@ const PlaceholderPage = ({ title }: { title: string }) => (
   </div>
 );
 
-const About = () => <PlaceholderPage title="About" />;
 const WhyUs = () => <PlaceholderPage title="Why Us" />;
 const Pricing = () => <PlaceholderPage title="Pricing" />;
 const Docs = () => <PlaceholderPage title="Docs" />;
@@ -29,7 +29,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/why-us" element={<WhyUs />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/docs" element={<Docs />} />
