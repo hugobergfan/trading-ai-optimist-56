@@ -55,7 +55,7 @@ export function AppleStyleDock() {
         {data.map((item, idx) => (
           <Link to={item.href} key={idx} className="block">
             <DockItem
-              className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 cursor-pointer'
+              className='cursor-pointer'
             >
               <DockLabel>{item.title}</DockLabel>
               <DockIcon>{item.icon}</DockIcon>
