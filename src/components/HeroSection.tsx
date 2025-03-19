@@ -1,48 +1,41 @@
 
 import React from 'react';
-import PerformanceCard from './PerformanceCard';
 import Button from './Button';
+import PerformanceCard from './PerformanceCard';
 
 const HeroSection = () => {
   return (
-    <section className="relative pt-28 pb-24 overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-24 right-0 w-72 h-72 bg-trading-blue/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-12 left-0 w-96 h-96 bg-trading-blue/5 rounded-full blur-3xl -z-10" />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h5 className="inline-block px-3 py-1 text-xs font-medium bg-trading-light-blue text-trading-blue rounded-full mb-4 animate-fade-in">
-            Powered by Advanced AI
-          </h5>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            Trade Smarter with AI-Driven Insights
+    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight text-balance">
+            AI-Powered Trading Bot for <span className="text-trading-blue">Maximum Returns</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Our advanced trading bot leverages artificial intelligence to predict market movements with remarkable accuracy.
+          <p className="text-lg sm:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 text-balance">
+            Our advanced AI algorithm analyzes market patterns to execute profitable trades automatically. 
+            Experience the future of trading with proven results.
           </p>
+          <div className="flex justify-center gap-4">
+            <Button>Start Trading</Button>
+            <button className="px-6 py-2 rounded-lg border border-gray-300 font-medium text-foreground/90 hover:bg-gray-50 transition-colors">
+              Learn More
+            </button>
+          </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
-          <PerformanceCard 
-            title="Stocks Performance" 
-            percentage={244} 
-            style={{ animationDelay: '0.3s' }}
-          />
-          <PerformanceCard 
-            title="Penny Stocks Performance" 
-            percentage={533} 
-            style={{ animationDelay: '0.4s' }}
-          />
-        </div>
-        
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-up" style={{ animationDelay: '0.5s' }}>
-          <Button size="lg">
-            Start Trading Now
-          </Button>
-          <Button variant="outline" size="lg">
-            Learn How It Works
-          </Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+          <div className="animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <PerformanceCard 
+              title="Stock Market Returns" 
+              percentage={244} 
+            />
+          </div>
+          <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
+            <PerformanceCard 
+              title="Penny Stocks Returns" 
+              percentage={533} 
+            />
+          </div>
         </div>
       </div>
     </section>
