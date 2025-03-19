@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 
 const Index = () => {
   useEffect(() => {
@@ -9,11 +10,12 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
       <Navbar />
       <main>
         <HeroSection />
       </main>
+      <AppleStyleDock />
     </div>
   );
 };
