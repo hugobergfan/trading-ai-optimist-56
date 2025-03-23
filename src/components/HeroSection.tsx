@@ -2,10 +2,11 @@
 import React from 'react';
 import Button from './Button';
 import PerformanceCard from './PerformanceCard';
+import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight text-balance">
@@ -15,8 +16,9 @@ const HeroSection = () => {
             Our advanced AI algorithm analyzes market patterns to execute profitable trades automatically. 
             Experience the future of trading with proven results.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button>Start Trading</Button>
+            <Button variant="outline">Try Free Demo</Button>
             <button className="px-6 py-2 rounded-lg border border-gray-300 font-medium text-foreground/90 hover:bg-gray-50 transition-colors">
               Learn More
             </button>
