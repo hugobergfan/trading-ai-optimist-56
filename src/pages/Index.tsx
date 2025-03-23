@@ -11,6 +11,7 @@ import DisclaimerAndContact from '@/components/DisclaimerAndContact';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import { WavyBackgroundDemo } from '@/components/WavyBackgroundDemo';
 
 const Index = () => {
   useEffect(() => {
@@ -28,7 +29,8 @@ const Index = () => {
     <div className="min-h-screen bg-background relative">
       <Navbar />
       <main>
-        <HeroSection />
+        {/* Replace HeroSection with WavyBackgroundDemo */}
+        <WavyBackgroundDemo />
         <HowItWorks />
         <KeyFeatures />
         <Testimonials />
