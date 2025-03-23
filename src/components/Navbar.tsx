@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
-import Button from './Button';
+import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -34,9 +34,12 @@ const Navbar = () => {
             </a>
           </div>
           
-          <div className="hidden md:block">
-            <Button>
-              Get Started
+          <div className="hidden md:flex space-x-4">
+            <Button variant="ghost" className="text-foreground" asChild>
+              <a href="/login">Log in</a>
+            </Button>
+            <Button className="bg-trading-blue hover:bg-trading-dark-blue" asChild>
+              <a href="/signup">Sign up</a>
             </Button>
           </div>
           
