@@ -8,6 +8,7 @@ import Testimonials from '@/components/Testimonials';
 import PerformanceComparison from '@/components/PerformanceComparison';
 import FAQ from '@/components/FAQ';
 import DisclaimerAndContact from '@/components/DisclaimerAndContact';
+import Footer from '@/components/Footer';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
@@ -47,6 +48,7 @@ const Index = () => {
           </Button>
         </div>
       </main>
+      <Footer />
       <AppleStyleDock />
     </div>
   );
