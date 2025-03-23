@@ -23,7 +23,8 @@ const Navbar = () => {
     <header 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300",
-        scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        "bg-white", // Changed from conditional background to always white
+        scrolled ? "shadow-sm" : ""
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
