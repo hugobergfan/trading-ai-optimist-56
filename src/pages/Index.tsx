@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import SparklesDemo from '@/components/SparklesDemo';
 
 const Index = () => {
   useEffect(() => {
@@ -34,6 +35,7 @@ const Index = () => {
         <KeyFeatures />
         <Testimonials />
         <PerformanceComparison />
+        <SparklesDemo /> {/* Add the SparklesDemo component */}
         <FAQ />
         <DisclaimerAndContact />
         
