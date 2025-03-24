@@ -3,7 +3,7 @@ import * as React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile" // Fixed import
+import { useIsMobile } from "@/hooks/use-mobile" 
 import { Engine } from "@tsparticles/engine"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
@@ -36,7 +36,7 @@ export function Sparkles({
 }: SparklesProps) {
   const { theme } = useTheme()
   const containerRef = useRef<HTMLDivElement>(null)
-  const isMobile = useIsMobile() // Using correct hook
+  const isMobile = useIsMobile()
   const [init, setInit] = useState(false)
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -91,8 +91,7 @@ export function Sparkles({
               number: {
                 density: {
                   enable: true,
-                  // Fix for unknown property 'area'
-                  value_area: 800, // Corrected property
+                  area: 800, // Fixed property name
                 },
                 value: particleCount,
               },

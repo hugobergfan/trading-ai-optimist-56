@@ -4,12 +4,6 @@ import { Hero } from "@/components/ui/hero";
 export function HeroDemo() {
   return (
     <Hero
-      pill={{
-        text: "AI-Powered Trading",
-        href: "/features",
-        variant: "default",
-        size: "md",
-      }}
       content={{
         title: "AI-powered trading",
         titleHighlight: "in minutes, not months",
