@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
@@ -50,6 +49,9 @@ const Navbar = () => {
             </Link>
             <Link to="/docs" className="navigation-link font-medium">
               Docs
+            </Link>
+            <Link to="/components" className="navigation-link font-medium">
+              Components
             </Link>
           </div>
           
