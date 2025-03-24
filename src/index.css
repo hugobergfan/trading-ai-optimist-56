@@ -103,4 +103,18 @@
       transform: translateY(0);
     }
   }
+
+  /* Add marquee animation for testimonials */
+  .animate-marquee {
+    animation: marquee var(--duration) linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
 }
