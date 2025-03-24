@@ -102,7 +102,7 @@ function HeroContent({
         )}
       </motion.h1>
       <motion.p
-        className="max-w-[52rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+        className="max-w-[60rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.8, ease }}
@@ -160,15 +160,15 @@ interface HeroProps {
 
 const Hero = ({ pill, content, preview }: HeroProps) => {
   return (
-    <div className="container relative overflow-hidden">
+    <div className="container relative overflow-hidden max-w-7xl">
       <Glow variant="above" />
       <div className="flex min-h-[calc(100vh-64px)] flex-col lg:flex-row items-center py-8 px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col gap-4 w-full lg:w-3/4">
+        <div className="flex flex-col gap-4 w-full lg:w-3/5">
           {pill && <HeroBadge {...pill} />}
           <HeroContent {...content} />
         </div>
         {preview && (
-          <div className="w-full lg:max-w-xl lg:pl-16 mt-12 lg:mt-0">
+          <div className="w-full lg:w-2/5 mt-12 lg:mt-0">
             {preview}
           </div>
         )}
