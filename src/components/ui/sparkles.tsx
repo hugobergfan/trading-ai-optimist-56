@@ -91,7 +91,7 @@ export function Sparkles({
               number: {
                 density: {
                   enable: true,
-                  value_area: 800, // Changed to value_area which is the correct property
+                  area: 800, // Using 'area' which is the correct property for this version
                 },
                 value: particleCount,
               },
