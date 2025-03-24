@@ -67,8 +67,7 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          // Fix: changed from 'area' to 'value'
-          value: particleDensity || 800,
+          area: particleDensity || 800,
         },
         value: 80,
       },
