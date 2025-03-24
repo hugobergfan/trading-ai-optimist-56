@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import { AuroraBackgroundDemo } from '@/components/ui/aurora-background-demo';
 
 const Index = () => {
   useEffect(() => {
@@ -36,6 +37,9 @@ const Index = () => {
         <PerformanceComparison />
         <FAQ />
         <DisclaimerAndContact />
+        <div className="py-16">
+          <AuroraBackgroundDemo />
+        </div>
         
         {/* Back to top button */}
         <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{ animationDelay: '1.5s' }}>

@@ -48,7 +48,7 @@ export function Sparkles({
       },
       move: {
         enable: true,
-        direction: "none", // Using "none" as a valid value
+        direction: "none" as const, // Fixed the type issue
         speed: {
           min: minSpeed || speed / 10,
           max: speed,
