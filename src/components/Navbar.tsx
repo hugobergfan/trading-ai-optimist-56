@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Brain } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -54,15 +53,11 @@ const Navbar = () => {
             </Link>
           </div>
           
-          {/* Search bar in the middle */}
-          <div className="hidden lg:flex flex-1 max-w-md mx-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="relative w-full transition-all duration-300 hover:shadow-md">
-              <Input 
-                type="text" 
-                placeholder="Search..." 
-                className="pl-10 pr-4 py-2 w-full transition-all duration-300 focus:border-trading-blue"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {/* AI Trading Bot Section - replacing the search bar */}
+          <div className="hidden lg:flex items-center space-x-2 flex-1 max-w-md mx-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="flex items-center px-4 py-2 bg-trading-light-blue rounded-lg text-trading-blue">
+              <Brain className="h-5 w-5 mr-2" />
+              <span className="font-medium">AI-Powered Trading Bot Active</span>
             </div>
           </div>
           
