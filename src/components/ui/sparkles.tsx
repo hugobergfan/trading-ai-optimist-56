@@ -67,7 +67,8 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          area: particleDensity || 800,
+          // Fix: changed from 'area' to 'value'
+          value: particleDensity || 800,
         },
         value: 80,
       },
@@ -121,7 +122,7 @@ export const Sparkles = ({
   );
 };
 
-export const Torch = ({ size = 300, className, ...rest }: { size?: number; className?: string }) => {
+export const Torch = ({ size = 300, className, ...rest }: { size?: number; className?: string; children?: React.ReactNode }) => {
   const { elapsed } = useTime();
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -144,7 +145,7 @@ export const Torch = ({ size = 300, className, ...rest }: { size?: number; class
       {...rest}
     >
       <motion.div
-        className="absolute pointer-events-none  overflow-hidden"
+        className="absolute pointer-events-none overflow-hidden"
         style={{
           left: position.x ? position.x - size / 2 : 0,
           top: position.y ? position.y - size / 2 : 0,
