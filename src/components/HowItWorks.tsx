@@ -1,54 +1,66 @@
 
 import React from 'react';
-import { ChartBar, Brain, CircleDollarSign } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { GlareCardDemo } from '@/components/ui/glare-card-demo';
 
 const HowItWorks = () => {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">How It Works</h2>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">How TradingAI Works</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Our AI-powered platform analyzes market data in real time to execute trades with precision and efficiency
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="relative bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-14 h-14 flex items-center justify-center bg-trading-light-blue rounded-full mb-4">
-              <ChartBar className="w-7 h-7 text-trading-blue" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Data Collection</h3>
-            <p className="text-muted-foreground">Our system gathers real-time market data, economic indicators, and news from around the world.</p>
-            <div className="absolute -right-4 top-1/2 hidden md:block">
-              <ArrowShape />
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <Card className="border border-border/40 shadow-sm bg-card/80 backdrop-blur-sm hover:shadow-md transition-all duration-300">
+            <CardHeader>
+              <CardTitle>1. Connect Your Account</CardTitle>
+              <CardDescription>Link your trading account through our secure API integration</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                We support major exchanges and brokers with read-only API keys to ensure your funds remain secure
+              </p>
+            </CardContent>
+          </Card>
           
-          <div className="relative bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-14 h-14 flex items-center justify-center bg-trading-light-blue rounded-full mb-4">
-              <Brain className="w-7 h-7 text-trading-blue" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">AI Analysis</h3>
-            <p className="text-muted-foreground">Advanced machine learning models analyze patterns and generate predictions with high accuracy.</p>
-            <div className="absolute -right-4 top-1/2 hidden md:block">
-              <ArrowShape />
-            </div>
-          </div>
+          <Card className="border border-border/40 shadow-sm bg-card/80 backdrop-blur-sm hover:shadow-md transition-all duration-300">
+            <CardHeader>
+              <CardTitle>2. Set Your Strategy</CardTitle>
+              <CardDescription>Choose from proven strategies or customize your own</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Define risk tolerance, target assets, and trading frequency while our AI adapts to market conditions
+              </p>
+            </CardContent>
+          </Card>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-14 h-14 flex items-center justify-center bg-trading-light-blue rounded-full mb-4">
-              <CircleDollarSign className="w-7 h-7 text-trading-blue" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Trade Execution</h3>
-            <p className="text-muted-foreground">Trades are executed automatically according to your risk profile with no manual intervention needed.</p>
+          <Card className="border border-border/40 shadow-sm bg-card/80 backdrop-blur-sm hover:shadow-md transition-all duration-300">
+            <CardHeader>
+              <CardTitle>3. AI Takes Control</CardTitle>
+              <CardDescription>Let our advanced algorithms work for you</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                The AI continually learns and improves while you monitor performance through our dashboard
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div className="mt-20 mb-10">
+          <h3 className="text-2xl font-bold text-foreground mb-8 text-center">Featured Strategies</h3>
+          <div className="flex justify-center items-center">
+            <GlareCardDemo />
           </div>
         </div>
       </div>
     </section>
   );
 };
-
-// Simple arrow shape component
-const ArrowShape = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
 
 export default HowItWorks;
