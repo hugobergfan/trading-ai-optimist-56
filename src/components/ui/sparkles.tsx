@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect, useState, FC, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { tsParticles } from '@tsparticles/slim';
+import { loadSlim } from "@tsparticles/slim";
 import { useMotionValue, motion, useSpring } from 'framer-motion';
 import type { Container, Engine } from '@tsparticles/engine';
 import type { ISourceOptions } from '@tsparticles/engine';
@@ -57,7 +57,7 @@ export const Sparkles: FC<SparklesProps> = ({
 
   useEffect(() => {
     const loadParticles = async () => {
-      const engine = await tsParticles.load(id, {
+      const engine = await loadSlim(id, {
         particles: {
           number: {
             value: particleCount,
