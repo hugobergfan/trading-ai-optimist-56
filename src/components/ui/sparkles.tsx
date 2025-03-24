@@ -1,12 +1,9 @@
 
-// I need to update the "direction" property to use a valid value from the MoveDirection enum
-// This is likely causing the type error. Direction should be one of the predefined values, not a string.
-
 import * as React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { useWindowSize } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile" // Fixed import
 import { Engine } from "@tsparticles/engine"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
@@ -39,7 +36,7 @@ export function Sparkles({
 }: SparklesProps) {
   const { theme } = useTheme()
   const containerRef = useRef<HTMLDivElement>(null)
-  const windowSize = useWindowSize()
+  const isMobile = useIsMobile() // Using correct hook
   const [init, setInit] = useState(false)
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -84,7 +81,7 @@ export function Sparkles({
               },
               move: {
                 enable: !disableAnimation,
-                direction: "none", // Changed from string to a valid MoveDirection value
+                direction: "none",
                 speed: {
                   min: particleSpeed / 2,
                   max: particleSpeed,
@@ -94,7 +91,8 @@ export function Sparkles({
               number: {
                 density: {
                   enable: true,
-                  area: 800,
+                  // Fix for unknown property 'area'
+                  value_area: 800, // Corrected property
                 },
                 value: particleCount,
               },

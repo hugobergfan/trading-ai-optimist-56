@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Sparkles } from "@/components/ui/sparkles";
 import { cn } from "@/lib/utils";
@@ -71,11 +70,11 @@ export function SparklesDemo({ className }: { className?: string }) {
           {/* Particles effect */}
           <Sparkles
             className="h-full w-full"
-            color="#0A84FF"
-            size={2}
-            speed={0.8}
-            opacity={0.6}
-            density={300}
+            particleColor="#0A84FF"
+            minSize={1}
+            maxSize={2}
+            particleSpeed={0.8}
+            particleCount={300}
           />
           
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
@@ -91,7 +90,7 @@ export function SparklesDemo({ className }: { className?: string }) {
               <div className="h-16 w-full relative overflow-hidden">
                 <svg className="w-full h-full" viewBox="0 0 100 20">
                   <path 
-                    d="M0,10 L5,8 L10,12 L15,10 L20,13 L25,11 L30,14 L35,12 L40,15 L45,13 L50,16 L55,14 L60,17 L65,15 L70,18 L75,16 L80,19 L85,17 L90,20 L95,18 L100,20" 
+                    d="M0,10 L5,8 L10,12 L15,10 L20,13 L25,11 L30,14 L35,12 L40,15 L45,13 L50,16 L55,14 L60,17 L65,15 L70,18 L75,16 L80,19 L85,17 L90,20 L95,18 L100,20 L100,20 L0,20 Z" 
                     fill="none" 
                     stroke="rgba(10,132,255,0.8)" 
                     strokeWidth="0.5"
