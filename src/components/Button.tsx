@@ -36,6 +36,7 @@ const Button = ({
         baseStyles,
         variantStyles[variant],
         sizeStyles[size],
+        "transition-transform duration-300 hover:scale-105",
         className
       )}
       {...props}

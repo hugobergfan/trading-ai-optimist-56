@@ -50,12 +50,12 @@ const data = [
 
 export function AppleStyleDock() {
   return (
-    <div className='fixed top-2 left-1/2 max-w-full -translate-x-1/2 z-40'>
+    <div className='fixed top-2 left-1/2 max-w-full -translate-x-1/2 z-40 animate-fade-in' style={{ animationDelay: '1s' }}>
       <Dock className='items-end pb-3'>
         {data.map((item, idx) => (
-          <Link to={item.href} key={idx} className="block">
+          <Link to={item.href} key={idx} className="block transition-all duration-300">
             <DockItem
-              className='cursor-pointer'
+              className='cursor-pointer transition-all duration-300'
             >
               <DockLabel className="bg-gray-100/90 dark:bg-neutral-800/90 border-gray-300 dark:border-neutral-700 text-sm font-medium">{item.title}</DockLabel>
               <DockIcon>{item.icon}</DockIcon>

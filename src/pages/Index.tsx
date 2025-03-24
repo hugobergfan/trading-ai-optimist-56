@@ -28,7 +28,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
       <Navbar />
-      <main>
+      <main className="animate-fade-in">
         <HeroSection />
         <HowItWorks />
         <KeyFeatures />
@@ -38,11 +38,11 @@ const Index = () => {
         <DisclaimerAndContact />
         
         {/* Back to top button */}
-        <div className="fixed bottom-8 right-8 z-40">
+        <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{ animationDelay: '1.5s' }}>
           <Button 
             size="icon" 
             onClick={scrollToTop}
-            className="rounded-full shadow-md"
+            className="rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
           >
             <ArrowUp className="h-5 w-5" />
           </Button>
