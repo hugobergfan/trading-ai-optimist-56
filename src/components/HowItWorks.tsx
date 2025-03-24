@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { GlareCardDemo } from '@/components/ui/glare-card-demo';
+import { AuthorCardDemo } from '@/components/ui/author-card-demo';
 
 const HowItWorks = () => {
   return (
@@ -57,6 +58,11 @@ const HowItWorks = () => {
           <div className="flex justify-center items-center">
             <GlareCardDemo />
           </div>
+        </div>
+        
+        <div className="mt-20">
+          <h3 className="text-2xl font-bold text-foreground mb-8 text-center">Expert Insights</h3>
+          <AuthorCardDemo />
         </div>
       </div>
     </section>
