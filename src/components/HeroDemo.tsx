@@ -1,6 +1,5 @@
 
 import { Hero } from "@/components/ui/hero";
-import { Brain } from "lucide-react";
 
 export function HeroDemo() {
   return (
@@ -8,7 +7,6 @@ export function HeroDemo() {
       pill={{
         text: "AI-Powered Trading",
         href: "/features",
-        icon: <Brain className="h-4 w-4" />,
         variant: "default",
         size: "md",
       }}
