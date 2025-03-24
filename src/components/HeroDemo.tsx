@@ -26,11 +26,6 @@ export function HeroDemo() {
           text: "View on GitHub",
         },
       }}
-      preview={
-        <div className="bg-card rounded-xl shadow-lg overflow-hidden border border-border">
-          {/* Image removed as requested */}
-        </div>
-      }
     />
   );
 }
