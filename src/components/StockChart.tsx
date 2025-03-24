@@ -10,7 +10,6 @@ import {
   Tooltip 
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 import { HistoricalData } from '@/services/financialApi';
 
 interface StockChartProps {
@@ -74,61 +73,48 @@ const StockChart = ({ data, symbol, isLoading = false }: StockChartProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="h-80">
-        <ChartContainer 
-          config={{
-            stock: {
-              theme: {
-                light: isPositive ? "rgba(34, 197, 94, 0.6)" : "rgba(239, 68, 68, 0.6)",
-                dark: isPositive ? "rgba(34, 197, 94, 0.6)" : "rgba(239, 68, 68, 0.6)",
-              },
-            },
-          }}
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart
-              data={chartData}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="colorStock" x1="0" y1="0" x2="0" y2="1">
-                  <stop 
-                    offset="5%" 
-                    stopColor={isPositive ? "#22c55e" : "#ef4444"} 
-                    stopOpacity={0.8}
-                  />
-                  <stop 
-                    offset="95%" 
-                    stopColor={isPositive ? "#22c55e" : "#ef4444"} 
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-              <XAxis 
-                dataKey="date" 
-                tickMargin={10}
-                tickFormatter={(value) => {
-                  const date = new Date(value);
-                  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-                }}
-              />
-              <YAxis 
-                domain={[minPrice, maxPrice]} 
-                tickFormatter={(value) => `$${value.toFixed(0)}`}
-                width={60}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Area 
-                type="monotone" 
-                dataKey="close" 
-                name="Price" 
-                stroke={isPositive ? "#16a34a" : "#dc2626"} 
-                fillOpacity={1}
-                fill="url(#colorStock)" 
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartContainer>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={chartData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorStock" x1="0" y1="0" x2="0" y2="1">
+                <stop 
+                  offset="5%" 
+                  stopColor={isPositive ? "#22c55e" : "#ef4444"} 
+                  stopOpacity={0.8}
+                />
+                <stop 
+                  offset="95%" 
+                  stopColor={isPositive ? "#22c55e" : "#ef4444"} 
+                  stopOpacity={0}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+            <XAxis 
+              dataKey="date" 
+              tickMargin={10}
+            />
+            <YAxis 
+              domain={[minPrice, maxPrice]} 
+              tickFormatter={(value) => `$${value.toFixed(0)}`}
+              width={60}
+            />
+            <Tooltip 
+              formatter={(value: number) => [`$${value.toFixed(2)}`, 'Price']}
+              labelFormatter={(label) => `Date: ${label}`}
+            />
+            <Area 
+              type="monotone" 
+              dataKey="close" 
+              stroke={isPositive ? "#16a34a" : "#dc2626"} 
+              fillOpacity={1}
+              fill="url(#colorStock)" 
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );

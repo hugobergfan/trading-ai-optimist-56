@@ -1,14 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { 
   Card, 
   CardContent, 
-  CardHeader, 
-  CardTitle, 
   CardDescription, 
-  CardFooter 
+  CardHeader, 
+  CardTitle 
 } from '@/components/ui/card';
 import { 
   Table, 
@@ -28,8 +26,7 @@ import {
   TrendingUp, 
   TrendingDown, 
   ChartBar, 
-  DollarSign,
-  Calendar
+  DollarSign
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
@@ -307,19 +304,16 @@ const StockDashboard = () => {
                 <PerformanceCard 
                   title="S&P 500" 
                   percentage={quotes['SPY']?.regularMarketChangePercent || 0}
-                  value={quotes['SPY']?.regularMarketPrice || 0}
                   period="Today"
                 />
                 <PerformanceCard 
                   title="Nasdaq" 
                   percentage={quotes['QQQ']?.regularMarketChangePercent || 0}
-                  value={quotes['QQQ']?.regularMarketPrice || 0}
                   period="Today"
                 />
                 <PerformanceCard 
                   title="Dow Jones" 
                   percentage={quotes['DIA']?.regularMarketChangePercent || 0}
-                  value={quotes['DIA']?.regularMarketPrice || 0}
                   period="Today"
                 />
               </>

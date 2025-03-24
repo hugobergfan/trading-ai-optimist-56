@@ -15,7 +15,14 @@ import ComponentShowcase from "./pages/ComponentShowcase";
 import ApiDocumentation from "./pages/ApiDocumentation";
 
 const App = () => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        refetchOnWindowFocus: false,
+      },
+    },
+  }));
 
   return (
     <QueryClientProvider client={queryClient}>
