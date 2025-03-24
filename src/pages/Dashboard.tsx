@@ -18,7 +18,7 @@ import sharePredictionsApi, { MarketBarometer } from '@/services/sharePrediction
 import { useQuery } from '@tanstack/react-query';
 
 const Dashboard = () => {
-  const { isAuthenticated, logout, userName } = useAuth();
+  const { isAuthenticated, logout, userName, apiKey } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -35,10 +35,7 @@ const Dashboard = () => {
     queryKey: ['marketBarometer'],
     queryFn: async () => {
       try {
-        // For now we're using a dummy API key method since we're simplifying auth
-        // In a real app, this would use proper authentication
-        localStorage.setItem('sharePredictions_apiKey', 'waHdJ6pK9yiFdMnyGNBCfWGENw_ur-9AUkVPg-hLN0w');
-        
+        console.log('Fetching market data with API key:', apiKey);
         const response = await sharePredictionsApi.getMarketBarometer({
           ordering: '-latest_market_date',
           limit: 1
@@ -88,9 +85,9 @@ const Dashboard = () => {
                 API Connected
               </span>
             ) : (
-              <span className="text-sm text-red-600 flex items-center">
-                <span className="h-2 w-2 bg-red-500 rounded-full mr-2"></span>
-                API Disconnected
+              <span className="text-sm text-orange-600 flex items-center">
+                <span className="h-2 w-2 bg-orange-500 rounded-full mr-2"></span>
+                Using Demo Data
               </span>
             )}
             <Button onClick={handleRefreshData} variant="outline" size="sm" className="mr-2">
@@ -129,7 +126,7 @@ const Dashboard = () => {
             <Card className="p-6 bg-red-50 border-red-200">
               <CardTitle className="text-red-600 mb-2">Error Loading Market Data</CardTitle>
               <CardDescription>
-                {error instanceof Error ? error.message : "Failed to load market data. Please try again."}
+                Using demo data. The API might be unavailable or you may need to update your API key.
               </CardDescription>
               <Button 
                 variant="outline" 

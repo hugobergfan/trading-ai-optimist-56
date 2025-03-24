@@ -93,7 +93,7 @@ export function Sparkles({
         number: {
           density: {
             enable: true,
-            area: particleDensity, // Fixed property name from value_area to area
+            area: particleDensity,
           },
           value: 80,
         },
@@ -113,8 +113,13 @@ export function Sparkles({
     async function initParticles() {
       try {
         if (containerRef.current) {
-          // Initialize particles correctly
-          const instance = await loadSlim(containerRef.current, options);
+          // Fix: Use loadSlim properly
+          await loadSlim(tsParticles);
+          const instance = await tsParticles.load({
+            id,
+            element: containerRef.current,
+            options
+          });
           setContainer(instance);
         }
       } catch (error) {
