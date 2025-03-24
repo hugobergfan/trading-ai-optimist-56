@@ -100,10 +100,6 @@ export default {
 				'pulse-slow': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
-				},
-				'slider-left': {
-					from: { transform: 'translateX(0)' },
-					to: { transform: 'translateX(-50%)' }
 				}
 			},
 			animation: {
@@ -111,8 +107,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-up': 'fade-up 0.7s ease-out',
-				'pulse-slow': 'pulse-slow 3s infinite',
-				'slider-left': 'slider-left var(--duration, 20s) linear infinite'
+				'pulse-slow': 'pulse-slow 3s infinite'
 			}
 		}
 	},
