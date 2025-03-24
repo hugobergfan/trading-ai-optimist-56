@@ -1,12 +1,13 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/sonner';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   userName: string | null;
-  login: (name: string) => Promise<boolean>;
+  login: (name: string, apiKey?: string) => Promise<boolean>;
   logout: () => void;
   apiKey: string | null;
   setApiKey: (key: string) => void;
@@ -19,7 +20,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userName, setUserName] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState<string | null>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     // Check if user is already logged in
@@ -34,6 +34,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (storedApiKey) {
         setApiKey(storedApiKey);
+      } else {
+        // Set default API key if none stored
+        setApiKey('1Y9xJceC.bFVXXgiznj27AU1LG4XQosxA4opN08c6');
       }
       
       setIsLoading(false);
@@ -42,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, []);
 
-  const login = async (name: string): Promise<boolean> => {
+  const login = async (name: string, providedApiKey?: string): Promise<boolean> => {
     setIsLoading(true);
     try {
       // Store the name in localStorage
@@ -50,25 +53,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUserName(name);
       setIsAuthenticated(true);
       
-      // For demo purposes, set a default API key
-      const demoApiKey = 'waHdJ6pK9yiFdMnyGNBCfWGENw_ur-9AUkVPg-hLN0w';
-      localStorage.setItem('sharePredictions_apiKey', demoApiKey);
-      setApiKey(demoApiKey);
+      // Use provided API key if available, otherwise use default
+      const apiKeyToUse = providedApiKey || '1Y9xJceC.bFVXXgiznj27AU1LG4XQosxA4opN08c6';
+      localStorage.setItem('sharePredictions_apiKey', apiKeyToUse);
+      setApiKey(apiKeyToUse);
       
-      toast({
-        title: "Login successful",
-        description: `Welcome, ${name}!`,
-      });
+      toast.success(`Welcome, ${name}!`);
       
       setIsLoading(false);
       return true;
     } catch (error) {
       setIsLoading(false);
-      toast({
-        title: "Login error",
-        description: "An error occurred during login. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred during login. Please try again.");
       return false;
     }
   };
@@ -79,19 +75,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     setUserName(null);
     setApiKey(null);
-    toast({
-      title: "Logged out",
-      description: "You have been logged out successfully.",
-    });
+    toast.success("You have been logged out successfully.");
   };
   
   const updateApiKey = (key: string) => {
     localStorage.setItem('sharePredictions_apiKey', key);
     setApiKey(key);
-    toast({
-      title: "API Key Updated",
-      description: "Your API key has been updated successfully.",
-    });
+    toast.success("Your API key has been updated successfully.");
   };
 
   return (
