@@ -34,16 +34,6 @@
     --ring: 213 93% 60%;
 
     --radius: 0.75rem;
-    
-    /* Aurora variables */
-    --white: rgba(255, 255, 255, 1);
-    --transparent: rgba(255, 255, 255, 0);
-    --black: rgba(0, 0, 0, 1);
-    --blue-300: rgba(147, 197, 253, 1);
-    --blue-400: rgba(96, 165, 250, 1);
-    --blue-500: rgba(59, 130, 246, 1);
-    --indigo-300: rgba(165, 180, 252, 1);
-    --violet-200: rgba(221, 214, 254, 1);
   }
 
   * {
@@ -112,19 +102,5 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-  
-  /* Aurora animation */
-  @keyframes aurora {
-    0%, 100% {
-      background-position: 0% 0%, 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%, 100% 100%;
-    }
-  }
-  
-  .animate-aurora {
-    animation: aurora 10s ease infinite;
   }
 }

@@ -100,14 +100,6 @@ export default {
 				'pulse-slow': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
-				},
-				'appear': {
-					'0%': { opacity: '0', transform: 'translateY(10px)' },
-					'100%': { opacity: '1', transform: 'translateY(0)' }
-				},
-				'appear-zoom': {
-					'0%': { opacity: '0', transform: 'scale(0.95)' },
-					'100%': { opacity: '1', transform: 'scale(1)' }
 				}
 			},
 			animation: {
@@ -115,9 +107,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-up': 'fade-up 0.7s ease-out',
-				'pulse-slow': 'pulse-slow 3s infinite',
-				'appear': 'appear 0.5s ease-out forwards',
-				'appear-zoom': 'appear-zoom 0.5s ease-out forwards'
+				'pulse-slow': 'pulse-slow 3s infinite'
 			}
 		}
 	},

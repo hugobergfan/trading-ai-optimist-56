@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
 import HowItWorks from '@/components/HowItWorks';
 import KeyFeatures from '@/components/KeyFeatures';
 import Testimonials from '@/components/Testimonials';
@@ -11,9 +12,6 @@ import Footer from '@/components/Footer';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
-import { AuroraBackground } from '@/components/ui/aurora-background';
-import { AuroraBackgroundDemo } from '@/components/ui/aurora-background-demo';
-import { HeroDemo } from '@/components/blocks/hero-demo';
 
 const Index = () => {
   useEffect(() => {
@@ -28,18 +26,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 relative">
-      {/* Global Aurora Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <AuroraBackground direction="top-right" showRadialGradient={true}>
-          <div className="w-full h-full"></div>
-        </AuroraBackground>
-      </div>
-      
+    <div className="min-h-screen bg-background relative">
       <Navbar />
-      <main className="animate-fade-in relative z-10">
-        {/* Main content sections */}
-        <HeroDemo />
+      <main className="animate-fade-in">
+        <HeroSection />
         <HowItWorks />
         <KeyFeatures />
         <Testimonials />
