@@ -13,6 +13,7 @@ import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
 import { NavbarDemo } from '@/components/ui/navbar-demo';
+import { Header1 } from '@/components/ui/header';
 
 const Index = () => {
   useEffect(() => {
@@ -28,30 +29,34 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <Navbar />
-      <NavbarDemo />
-      <main className="animate-fade-in">
-        <HeroDemo />
-        <HowItWorks />
-        <KeyFeatures />
-        <Testimonials />
-        <PerformanceComparison />
-        <FAQ />
-        <DisclaimerAndContact />
-        
-        {/* Back to top button */}
-        <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{ animationDelay: '1.5s' }}>
-          <Button 
-            size="icon" 
-            onClick={scrollToTop}
-            className="rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
-        </div>
-      </main>
-      <Footer />
-      <AppleStyleDock />
+      {/* Main header that we just integrated */}
+      <Header1 />
+      
+      {/* Add spacing to account for fixed header */}
+      <div className="pt-20">
+        <main className="animate-fade-in">
+          <HeroDemo />
+          <HowItWorks />
+          <KeyFeatures />
+          <Testimonials />
+          <PerformanceComparison />
+          <FAQ />
+          <DisclaimerAndContact />
+          
+          {/* Back to top button */}
+          <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{ animationDelay: '1.5s' }}>
+            <Button 
+              size="icon" 
+              onClick={scrollToTop}
+              className="rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg"
+            >
+              <ArrowUp className="h-5 w-5" />
+            </Button>
+          </div>
+        </main>
+        <Footer />
+        <AppleStyleDock />
+      </div>
     </div>
   );
 };
