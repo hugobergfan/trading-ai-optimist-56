@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { createRoot } from "react-dom/client";
-import { type Container, type ISourceOptions } from "@tsparticles/engine";
+import { Container, ISourceOptions, RecursivePartial } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 
 export interface SparklesProps {
@@ -58,7 +57,7 @@ export function Sparkles({
             enable: true,
             mode: "repulse",
           },
-          resize: true,
+          resize: true as any, // Type fix
         },
         modes: {
           push: {
@@ -94,7 +93,7 @@ export function Sparkles({
         number: {
           density: {
             enable: true,
-            area: particleDensity,
+            value_area: particleDensity, // Fixed property name
           },
           value: 80,
         },
@@ -113,9 +112,11 @@ export function Sparkles({
 
     async function initParticles() {
       try {
-        await loadSlim(id, containerRef.current);
-        const particlesContainer = await loadSlim(id, containerRef.current);
-        setContainer(particlesContainer);
+        if (containerRef.current) {
+          await loadSlim(options, containerRef.current);
+          const instance = await loadSlim(options, containerRef.current);
+          setContainer(instance);
+        }
       } catch (error) {
         console.error("Error initializing particles:", error);
       }
