@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import HeroSection from '@/components/HeroSection';
 import HowItWorks from '@/components/HowItWorks';
 import KeyFeatures from '@/components/KeyFeatures';
 import Testimonials from '@/components/Testimonials';
@@ -40,7 +39,6 @@ const Index = () => {
       <Navbar />
       <main className="animate-fade-in relative z-10">
         {/* Main content sections */}
-        <HeroSection />
         <HeroDemo />
         <HowItWorks />
         <KeyFeatures />
