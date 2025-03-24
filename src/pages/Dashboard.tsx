@@ -274,19 +274,19 @@ const Dashboard = () => {
                     title="Overall Market" 
                     percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isMarketPositive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
+                    trend={isMarketPositive ? "up" : "down"}
                   />
                   <PerformanceCard 
                     title="Top 500 Companies" 
                     percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isTop500Positive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
+                    trend={isTop500Positive ? "up" : "down"}
                   />
                   <PerformanceCard 
                     title="Penny Stocks" 
                     percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isPennyStocksPositive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
+                    trend={isPennyStocksPositive ? "up" : "down"}
                   />
                 </div>
                 

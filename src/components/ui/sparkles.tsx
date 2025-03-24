@@ -1,174 +1,128 @@
 
-import React, { useEffect, useRef, useState } from "react";
-import { Container, tsParticles, type ISourceOptions } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
+"use client";
 
-export interface SparklesProps {
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
+
+interface SparklesProps {
   id: string;
-  children?: React.ReactNode;
   className?: string;
-  particleDensity?: number;
+  children: React.ReactNode;
+  backgroundColor?: string;
   particleColor?: string;
+  particleDensity?: number;
+  speed?: number;
   minSize?: number;
   maxSize?: number;
-  speed?: number;
-  backgroundColor?: string;
   showBackground?: boolean;
 }
 
 export function Sparkles({
   id,
-  children,
   className,
-  particleDensity = 100,
-  particleColor = "#FFF",
-  minSize = 1,
-  maxSize = 3,
+  children,
+  backgroundColor = "transparent",
+  particleColor = "#FFC700",
+  particleDensity = 600,
   speed = 1,
-  backgroundColor = "#000",
+  minSize = 1,
+  maxSize = 2,
   showBackground = false,
 }: SparklesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [container, setContainer] = useState<Container | null>(null);
+  const [particlesInitialized, setParticlesInitialized] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) {
+    if (typeof window === "undefined" || !containerRef.current || particlesInitialized) {
       return;
     }
 
-    const options: ISourceOptions = {
-      background: {
-        color: {
-          value: backgroundColor,
-        },
-      },
-      fullScreen: {
-        enable: false,
-        zIndex: 1,
-      },
-      fpsLimit: 120,
-      interactivity: {
-        events: {
-          onClick: {
-            enable: true,
-            mode: "push",
-          },
-          onHover: {
-            enable: true,
-            mode: "repulse",
-          },
-          resize: {
-            enable: true,
-            delay: 0.5,
-          },
-        },
-        modes: {
-          push: {
-            quantity: 4,
-          },
-          repulse: {
-            distance: 200,
-            duration: 0.4,
-          },
-        },
-      },
-      particles: {
-        color: {
-          value: particleColor,
-        },
-        links: {
-          color: particleColor,
-          distance: 150,
-          enable: true,
-          opacity: 0.5,
-          width: 1,
-        },
-        move: {
-          direction: "none",
-          enable: true,
-          outModes: {
-            default: "bounce",
-          },
-          random: false,
-          speed: speed,
-          straight: false,
-        },
-        number: {
-          density: {
-            enable: true,
-            value_area: particleDensity,
-          },
-          value: 80,
-        },
-        opacity: {
-          value: 0.5,
-        },
-        shape: {
-          type: "circle",
-        },
-        size: {
-          value: { min: minSize, max: maxSize },
-        },
-      },
-      detectRetina: true,
-    };
-
-    async function initParticles() {
+    const initParticles = async () => {
       try {
-        if (containerRef.current) {
-          await loadSlim(tsParticles);
-          const instance = await tsParticles.load({
-            id,
-            element: containerRef.current,
-            options
-          });
-          setContainer(instance);
-        }
+        const tsParticles = (await import("@tsparticles/slim")).tsParticles;
+        const initParticles = (await import("@tsparticles/slim")).initParticles;
+
+        await initParticles();
+
+        await tsParticles.load({
+          id,
+          options: {
+            background: {
+              color: {
+                value: backgroundColor,
+              },
+            },
+            fullScreen: {
+              enable: false,
+              zIndex: 0,
+            },
+            fpsLimit: 60,
+            particles: {
+              color: {
+                value: particleColor,
+              },
+              links: {
+                color: particleColor,
+                distance: 80,
+                enable: true,
+                opacity: 0.5,
+                width: 0.5,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outModes: {
+                  default: "bounce",
+                },
+                random: true,
+                speed: speed,
+                straight: false,
+              },
+              number: {
+                density: {
+                  enable: true,
+                  area: particleDensity,
+                },
+                value: 80,
+              },
+              opacity: {
+                value: 0.5,
+              },
+              shape: {
+                type: "circle",
+              },
+              size: {
+                value: { min: minSize, max: maxSize },
+              },
+            },
+            detectRetina: true,
+          },
+        });
+
+        setParticlesInitialized(true);
       } catch (error) {
-        console.error("Error initializing particles:", error);
+        console.error("Failed to initialize particles:", error);
       }
-    }
+    };
 
     initParticles();
 
     return () => {
-      if (container) {
-        container.destroy();
+      const tsParticles = window.tsParticles;
+      if (tsParticles) {
+        tsParticles.destroy(id);
       }
     };
-  }, [
-    id,
-    particleColor,
-    particleDensity,
-    minSize,
-    maxSize,
-    speed,
-    backgroundColor,
-  ]);
+  }, [backgroundColor, id, maxSize, minSize, particleColor, particleDensity, particlesInitialized, speed]);
 
   return (
-    <div
-      className={`relative isolate overflow-hidden ${className}`}
-      aria-hidden="true"
-    >
-      {showBackground && (
-        <div
-          className="absolute inset-0 z-0"
-          style={{ backgroundColor, opacity: 0.9 }}
-        />
-      )}
-
+    <div ref={containerRef} className={cn("relative", className)}>
       <div
-        ref={containerRef}
         id={id}
         className="absolute inset-0 z-10"
+        style={{ visibility: showBackground ? "visible" : "hidden" }}
       />
-
-      {children && (
-        <div className="relative z-20 flex h-full w-full items-center justify-center">
-          {children}
-        </div>
-      )}
+      <div className="relative z-20 flex items-center justify-center">{children}</div>
     </div>
   );
 }
