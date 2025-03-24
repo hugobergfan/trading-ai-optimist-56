@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -31,7 +30,7 @@ import {
   Filter
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import PerformanceCard from '@/components/PerformanceCard';
 import TickerSearch from '@/components/TickerSearch';
 import TickerPrediction from '@/components/TickerPrediction';
@@ -56,7 +55,6 @@ const Dashboard = () => {
   const { isAuthenticated, logout, userName, apiKey } = useAuth();
   const navigate = useNavigate();
   
-  // State for dashboard
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedTicker, setSelectedTicker] = useState<Ticker | null>(null);
   const [showPennyStocks, setShowPennyStocks] = useState<boolean>(false);
@@ -64,7 +62,6 @@ const Dashboard = () => {
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState<boolean>(false);
   const [newApiKey, setNewApiKey] = useState<string>('');
   
-  // Market Barometer data fetch
   const { 
     data: marketData, 
     isLoading: isLoadingMarket, 
@@ -90,7 +87,6 @@ const Dashboard = () => {
     enabled: isAuthenticated
   });
   
-  // Tickers data fetch
   const { 
     data: tickers, 
     isLoading: isLoadingTickers, 
@@ -109,7 +105,6 @@ const Dashboard = () => {
     enabled: isAuthenticated && activeTab === 'tickers'
   });
   
-  // Ticker Predictions data fetch
   const {
     data: tickerPredictions,
     isLoading: isLoadingPredictions,
@@ -134,27 +129,23 @@ const Dashboard = () => {
     enabled: !!selectedTicker && isAuthenticated
   });
   
-  // Check if authenticated
   React.useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
 
-  // Handle ticker selection
   const handleSelectTicker = (ticker: Ticker) => {
     setSelectedTicker(ticker);
     toast.success(`Loading prediction data for ${ticker.ticker}`);
     setActiveTab('ticker-detail');
   };
 
-  // Handle search
   const handleSearch = () => {
     if (!searchQuery.trim()) return;
     refetchTickers();
   };
 
-  // Handle refresh data
   const handleRefreshData = () => {
     refetchMarket();
     refetchTickers();
@@ -165,12 +156,10 @@ const Dashboard = () => {
     toast.success("Refreshing all data");
   };
 
-  // Format percentage for display
   const formatPercentage = (value: number) => {
     return `${Math.round(value * 100)}%`;
   };
 
-  // Handle API key update
   const handleUpdateApiKey = () => {
     if (newApiKey.trim()) {
       sharePredictionsApi.login(newApiKey.trim())
@@ -189,14 +178,12 @@ const Dashboard = () => {
     }
   };
 
-  // Determine if market prediction is positive
   const isMarketPositive = marketData && marketData.market_v_weighted_avg_pred > 0.5;
   const isTop500Positive = marketData && marketData.top_500_v_weighted_avg_pred > 0.5;
   const isPennyStocksPositive = marketData && marketData.penny_stocks_v_weighted_avg_pred > 0.5;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div>
@@ -240,7 +227,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-4 sm:w-[500px]">
@@ -250,7 +236,6 @@ const Dashboard = () => {
             <TabsTrigger value="documentation">API Docs</TabsTrigger>
           </TabsList>
           
-          {/* Market Overview Tab */}
           <TabsContent value="overview" className="space-y-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Market Barometer</h2>
@@ -289,19 +274,19 @@ const Dashboard = () => {
                     title="Overall Market" 
                     percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isMarketPositive ? TrendingUp : TrendingDown}
+                    trend={isMarketPositive ? "up" : "down"}
                   />
                   <PerformanceCard 
                     title="Top 500 Companies" 
                     percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isTop500Positive ? TrendingUp : TrendingDown}
+                    trend={isTop500Positive ? "up" : "down"}
                   />
                   <PerformanceCard 
                     title="Penny Stocks" 
                     percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    icon={isPennyStocksPositive ? TrendingUp : TrendingDown}
+                    trend={isPennyStocksPositive ? "up" : "down"}
                   />
                 </div>
                 
@@ -354,7 +339,6 @@ const Dashboard = () => {
             )}
           </TabsContent>
           
-          {/* Tickers Tab */}
           <TabsContent value="tickers" className="space-y-6">
             <Card>
               <CardHeader>
@@ -430,7 +414,6 @@ const Dashboard = () => {
             </Card>
           </TabsContent>
           
-          {/* Ticker Detail Tab */}
           <TabsContent value="ticker-detail" className="space-y-6">
             {!selectedTicker ? (
               <Card>
@@ -639,7 +622,6 @@ const Dashboard = () => {
             )}
           </TabsContent>
           
-          {/* API Documentation Tab */}
           <TabsContent value="documentation" className="space-y-6">
             <Card>
               <CardHeader>
@@ -738,34 +720,31 @@ fetchPredictions();`}
         </Tabs>
       </main>
       
-      {/* API Key Modal */}
-      {isApiKeyModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
-            <div className="p-6">
-              <h3 className="text-lg font-medium mb-4">Update API Key</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Enter your Share Predictions API key. You can find this in your account profile at <a href="https://www.sharepredictions.com/users/profile/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">sharepredictions.com</a>.
-              </p>
-              <Input
-                type="text"
-                placeholder="API Key"
-                value={newApiKey}
-                onChange={(e) => setNewApiKey(e.target.value)}
-                className="mb-4"
-              />
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setIsApiKeyModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleUpdateApiKey}>
-                  Update
-                </Button>
-              </div>
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" style={{ display: isApiKeyModalOpen ? 'flex' : 'none' }}>
+        <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
+          <div className="p-6">
+            <h3 className="text-lg font-medium mb-4">Update API Key</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Enter your Share Predictions API key. You can find this in your account profile at <a href="https://www.sharepredictions.com/users/profile/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">sharepredictions.com</a>.
+            </p>
+            <Input
+              type="text"
+              placeholder="API Key"
+              value={newApiKey}
+              onChange={(e) => setNewApiKey(e.target.value)}
+              className="mb-4"
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsApiKeyModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleUpdateApiKey}>
+                Update
+              </Button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
