@@ -38,7 +38,10 @@ const Index = () => {
         <div className="relative">
           {/* Secondary aurora at the middle part */}
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <AuroraBackground direction="center" showRadialGradient={true} />
+            <AuroraBackground direction="center" showRadialGradient={true}>
+              {/* Empty div for background only */}
+              <div className="w-full h-full"></div>
+            </AuroraBackground>
           </div>
           
           <div className="relative z-10">
@@ -51,7 +54,10 @@ const Index = () => {
         <div className="relative">
           {/* Tertiary aurora at the bottom */}
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <AuroraBackground direction="bottom-left" showRadialGradient={true} />
+            <AuroraBackground direction="bottom-left" showRadialGradient={true}>
+              {/* Empty div for background only */}
+              <div className="w-full h-full"></div>
+            </AuroraBackground>
           </div>
           
           <div className="relative z-10">
