@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,13 +33,29 @@ const Navbar = () => {
         <nav className="flex items-center justify-between">
           {/* Logo on the left */}
           <div className="flex items-center animate-fade-in">
-            <a href="/" className="text-xl font-bold text-trading-blue transition-all duration-300 hover:scale-105">
+            <Link to="/" className="text-xl font-bold text-trading-blue transition-all duration-300 hover:scale-105">
               Finox AI
-            </a>
+            </Link>
+          </div>
+          
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center space-x-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <Link to="/about" className="navigation-link font-medium">
+              About Us
+            </Link>
+            <Link to="/why-us" className="navigation-link font-medium">
+              Why Us
+            </Link>
+            <Link to="/pricing" className="navigation-link font-medium">
+              Pricing
+            </Link>
+            <Link to="/docs" className="navigation-link font-medium">
+              Docs
+            </Link>
           </div>
           
           {/* Search bar in the middle */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="hidden lg:flex flex-1 max-w-md mx-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="relative w-full transition-all duration-300 hover:shadow-md">
               <Input 
                 type="text" 
@@ -52,10 +69,10 @@ const Navbar = () => {
           {/* Login/Signup buttons on the right */}
           <div className="hidden md:flex space-x-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <Button variant="ghost" className="text-foreground transition-all duration-300 hover:scale-105" asChild>
-              <a href="/login">Log in</a>
+              <Link to="/login">Log in</Link>
             </Button>
             <Button className="bg-trading-blue hover:bg-trading-dark-blue transition-all duration-300 hover:scale-105" asChild>
-              <a href="/signup">Sign up</a>
+              <Link to="/signup">Sign up</Link>
             </Button>
           </div>
           
