@@ -22,7 +22,7 @@ import {
   TrendingDown, 
   Calendar, 
   DollarSign,
-  BarChart,
+  BarChart as BarChartIcon,
   Info,
   Filter
 } from 'lucide-react';
@@ -264,19 +264,19 @@ const Dashboard = () => {
                   title="Overall Market" 
                   percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  icon={isMarketPositive ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+                  trend={isMarketPositive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Top 500 Companies" 
                   percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  icon={isTop500Positive ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+                  trend={isTop500Positive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Penny Stocks" 
                   percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  icon={isPennyStocksPositive ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+                  trend={isPennyStocksPositive ? "up" : "down"}
                 />
               </div>
               
@@ -475,7 +475,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <div className="bg-gray-100 p-4 rounded-full mb-4">
-                  <BarChart className="h-10 w-10 text-gray-400" />
+                  <BarChartIcon className="h-10 w-10 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-medium mb-2">No Ticker Selected</h3>
                 <p className="text-sm text-gray-500 text-center max-w-md mb-6">

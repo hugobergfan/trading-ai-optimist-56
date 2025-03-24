@@ -42,61 +42,58 @@ export function Sparkles({
         const tsParticlesModule = await import("@tsparticles/slim");
         const tsParticles = tsParticlesModule.default;
         
-        await tsParticles.init();
+        await tsParticles.loadSlim();
         
-        await tsParticles.load({
-          id,
-          options: {
-            background: {
-              color: {
-                value: backgroundColor,
-              },
+        await tsParticles.loadJSON(id, {
+          background: {
+            color: {
+              value: backgroundColor,
             },
-            fullScreen: {
-              enable: false,
-              zIndex: 0,
-            },
-            fpsLimit: 60,
-            particles: {
-              color: {
-                value: particleColor,
-              },
-              links: {
-                color: particleColor,
-                distance: 80,
-                enable: true,
-                opacity: 0.5,
-                width: 0.5,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: {
-                  default: "bounce",
-                },
-                random: true,
-                speed: speed,
-                straight: false,
-              },
-              number: {
-                density: {
-                  enable: true,
-                  area: particleDensity,
-                },
-                value: 80,
-              },
-              opacity: {
-                value: 0.5,
-              },
-              shape: {
-                type: "circle",
-              },
-              size: {
-                value: { min: minSize, max: maxSize },
-              },
-            },
-            detectRetina: true,
           },
+          fullScreen: {
+            enable: false,
+            zIndex: 0,
+          },
+          fpsLimit: 60,
+          particles: {
+            color: {
+              value: particleColor,
+            },
+            links: {
+              color: particleColor,
+              distance: 80,
+              enable: true,
+              opacity: 0.5,
+              width: 0.5,
+            },
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: {
+                default: "bounce",
+              },
+              random: true,
+              speed: speed,
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: particleDensity,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.5,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: minSize, max: maxSize },
+            },
+          },
+          detectRetina: true,
         });
 
         setParticlesInitialized(true);
@@ -111,7 +108,7 @@ export function Sparkles({
       if (typeof window !== "undefined") {
         const tsParticlesModule = window.tsParticles;
         if (tsParticlesModule) {
-          tsParticlesModule.removeCanvas(id);
+          tsParticlesModule.destroy(id);
         }
       }
     };

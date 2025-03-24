@@ -16,6 +16,26 @@ const StockDashboard = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeTab, setActiveTab] = useState<string>('market-data');
   
+  // Sample news data for StockNews component
+  const sampleNews = [
+    {
+      title: "Market Update: Stocks Rally on Fed Decision",
+      publisher: "Financial Times",
+      publishedOn: new Date().toISOString(),
+      summary: "Stocks rallied today following the Federal Reserve's decision to maintain current interest rates...",
+      link: "https://example.com/news/1",
+      thumbnail: "https://via.placeholder.com/150"
+    },
+    {
+      title: "Tech Sector Leads Market Gains",
+      publisher: "Bloomberg",
+      publishedOn: new Date().toISOString(),
+      summary: "Technology stocks led the market higher today as several major companies reported better-than-expected earnings...",
+      link: "https://example.com/news/2",
+      thumbnail: "https://via.placeholder.com/150"
+    }
+  ];
+  
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -66,7 +86,7 @@ const StockDashboard = () => {
             <CardContent>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <AlpacaNewsStream />
-                <StockNews />
+                <StockNews news={sampleNews} />
               </div>
             </CardContent>
           </Card>
