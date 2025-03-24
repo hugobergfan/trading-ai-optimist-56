@@ -96,7 +96,7 @@ export function Sparkles({
         number: {
           density: {
             enable: true,
-            value_area: particleDensity, // Fixed: changed 'area' to 'value_area'
+            value_area: particleDensity,
           },
           value: 80,
         },

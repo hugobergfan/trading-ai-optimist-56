@@ -6,7 +6,7 @@ interface ApiResponse<T> {
 }
 
 const API_HOST = 'yahoo-finance15.p.rapidapi.com';
-const API_KEY = 'API:623eb939cmsh8363d70549687p1af7fajsn89125984c7a';
+const API_KEY = '1Y9xJceC.bFVXXgiznj27AU1LG4XQosxA4opN08c6';
 
 // Helper function to create headers
 const createHeaders = () => {
