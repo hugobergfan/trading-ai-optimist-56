@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PerformanceCard from './PerformanceCard';
 
 const data = [
@@ -58,7 +58,7 @@ const PerformanceComparison = () => {
           <h3 className="text-xl font-semibold mb-4 text-center">Annual Performance</h3>
           <div className="h-[400px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
+              <LineChart
                 data={data}
                 margin={{
                   top: 10,
@@ -71,9 +71,26 @@ const PerformanceComparison = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} />
-                <Area type="monotone" dataKey="ai" stackId="1" stroke="#0A84FF" fill="#0A84FF" fillOpacity={0.6} name="Finox AI" />
-                <Area type="monotone" dataKey="market" stackId="2" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} name="Market" />
-              </AreaChart>
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="ai" 
+                  stroke="#0A84FF" 
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                  activeDot={{ r: 6 }}
+                  name="Finox AI" 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="market" 
+                  stroke="#82ca9d" 
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                  activeDot={{ r: 6 }}
+                  name="Market" 
+                />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
