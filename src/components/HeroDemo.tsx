@@ -28,11 +28,7 @@ export function HeroDemo() {
       }}
       preview={
         <div className="bg-card rounded-xl shadow-lg overflow-hidden border border-border">
-          <img 
-            src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1248&h=765&q=80" 
-            alt="TradingAI Dashboard" 
-            className="w-full h-auto object-cover"
-          />
+          {/* Image removed as requested */}
         </div>
       }
     />
