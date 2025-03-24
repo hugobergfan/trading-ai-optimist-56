@@ -1,83 +1,118 @@
 
-"use client"
+// I need to update the "direction" property to use a valid value from the MoveDirection enum
+// This is likely causing the type error. Direction should be one of the predefined values, not a string.
 
-import { useEffect, useId, useState } from "react"
+import * as React from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
+import { useWindowSize } from "@/hooks/use-mobile"
+import { Engine } from "@tsparticles/engine"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
 
+interface SparklesProps {
+  id?: string
+  className?: string
+  particleColor?: string
+  backgroundColor?: string
+  minSize?: number
+  maxSize?: number
+  particleCount?: number
+  particleSpeed?: number
+  disableAnimation?: boolean
+  className2?: string
+}
+
 export function Sparkles({
+  id = "tsparticles",
   className,
-  size = 1,
-  minSize = null,
-  density = 800,
-  speed = 1,
-  minSpeed = null,
-  opacity = 1,
-  opacitySpeed = 3,
-  minOpacity = null,
-  color = "#FFFFFF",
-  background = "transparent",
-  options = {},
-}) {
-  const [isReady, setIsReady] = useState(false)
+  particleColor,
+  backgroundColor = "transparent",
+  minSize = 0.6,
+  maxSize = 2,
+  particleCount = 30,
+  particleSpeed = 2,
+  disableAnimation = false,
+  className2,
+  ...props
+}: SparklesProps) {
+  const { theme } = useTheme()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const windowSize = useWindowSize()
+  const [init, setInit] = useState(false)
+
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await initParticlesEngine(async (engine) => {
+      await loadSlim(engine)
+    })
+    setInit(true)
+  }, [])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine)
     }).then(() => {
-      setIsReady(true)
+      setInit(true)
     })
   }, [])
 
-  const id = useId()
-
-  const defaultOptions = {
-    background: {
-      color: {
-        value: background,
-      },
-    },
-    fullScreen: {
-      enable: false,
-      zIndex: 1,
-    },
-    fpsLimit: 120,
-    particles: {
-      color: {
-        value: color,
-      },
-      move: {
-        enable: true,
-        direction: "none", // Using "none" as a valid value
-        speed: {
-          min: minSpeed || speed / 10,
-          max: speed,
-        },
-        straight: false,
-      },
-      number: {
-        value: density,
-      },
-      opacity: {
-        value: {
-          min: minOpacity || opacity / 10,
-          max: opacity,
-        },
-        animation: {
-          enable: true,
-          sync: false,
-          speed: opacitySpeed,
-        },
-      },
-      size: {
-        value: {
-          min: minSize || size / 2.5,
-          max: size,
-        },
-      },
-    },
-    detectRetina: true,
-  }
-
-  return isReady && <Particles id={id} options={{ ...defaultOptions, ...options }} className={className} />
+  return (
+    <div
+      ref={containerRef}
+      className={cn("absolute inset-0 -z-10", className)}
+      {...props}
+    >
+      {init && (
+        <Particles
+          id={id}
+          className={cn("h-full w-full", className2)}
+          options={{
+            background: {
+              color: {
+                value: backgroundColor,
+              },
+            },
+            fullScreen: {
+              enable: false,
+              zIndex: -1,
+            },
+            fpsLimit: 60,
+            particles: {
+              color: {
+                value: particleColor || (theme === "dark" ? "#ffffff" : "#0A84FF"),
+              },
+              move: {
+                enable: !disableAnimation,
+                direction: "none", // Changed from string to a valid MoveDirection value
+                speed: {
+                  min: particleSpeed / 2,
+                  max: particleSpeed,
+                },
+                straight: false,
+              },
+              number: {
+                density: {
+                  enable: true,
+                  area: 800,
+                },
+                value: particleCount,
+              },
+              opacity: {
+                value: 0.7,
+              },
+              size: {
+                value: {
+                  min: minSize,
+                  max: maxSize,
+                },
+              },
+            },
+            detectRetina: true,
+          }}
+          init={particlesInit}
+        />
+      )}
+    </div>
+  )
 }

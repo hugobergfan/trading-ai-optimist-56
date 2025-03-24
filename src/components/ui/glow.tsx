@@ -26,7 +26,7 @@ export function Glow({
           "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
           "h-[40vh] w-[90vw] max-w-3xl",
           "rounded-full",
-          variant === "above" && "bg-trading-blue/20 blur-[100px]",
+          variant === "above" && "bg-trading-blue/30 blur-[100px]",
           variant === "below" && "bg-trading-blue/10 blur-[120px]"
         )}
       />
