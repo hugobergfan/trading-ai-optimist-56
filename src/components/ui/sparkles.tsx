@@ -1,4 +1,6 @@
 
+"use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -67,7 +69,7 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          value: particleDensity || 800,
+          area: particleDensity || 800,
         },
         value: 80,
       },
