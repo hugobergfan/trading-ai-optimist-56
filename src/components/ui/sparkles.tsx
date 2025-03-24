@@ -1,5 +1,6 @@
+
 import React, { useEffect, useRef, useState } from "react";
-import { Container, tsParticles } from "@tsparticles/engine";
+import { Container, tsParticles, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 
 export interface SparklesProps {
@@ -35,7 +36,7 @@ export function Sparkles({
       return;
     }
 
-    const options = {
+    const options: ISourceOptions = {
       background: {
         color: {
           value: backgroundColor,
@@ -56,7 +57,10 @@ export function Sparkles({
             enable: true,
             mode: "repulse",
           },
-          resize: true,
+          resize: {
+            enable: true,
+            delay: 0.5,
+          },
         },
         modes: {
           push: {
@@ -80,7 +84,7 @@ export function Sparkles({
           width: 1,
         },
         move: {
-          direction: "none" as const,
+          direction: "none",
           enable: true,
           outModes: {
             default: "bounce",

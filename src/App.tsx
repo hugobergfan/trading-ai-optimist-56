@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,12 +10,9 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import ComponentShowcase from "./pages/ComponentShowcase";
-
-// Custom placeholder for future pages - not currently routed
-const AboutUs = () => <div />;
+import ApiDocumentation from "./pages/ApiDocumentation";
 
 const App = () => {
-  // Move the QueryClient creation inside the component to avoid hooks issues
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -30,9 +26,8 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/api-docs" element={<ApiDocumentation />} />
               <Route path="/components" element={<ComponentShowcase />} />
-              {/* Routes for About, Why Us, Pricing, and Docs have been temporarily removed */}
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
