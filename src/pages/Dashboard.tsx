@@ -13,8 +13,9 @@ import { Button } from '@/components/ui/button';
 import { LogOut, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import PerformanceCard from '@/components/PerformanceCard';
-import { SparklesDemo } from '@/components/SparklesDemo';
-import sharePredictionsApi, { MarketBarometer } from '@/services/sharePredictionsApi';
+import TickerSearch from '@/components/TickerSearch';
+import TickerPrediction from '@/components/TickerPrediction';
+import sharePredictionsApi, { MarketBarometer, Ticker } from '@/services/sharePredictionsApi';
 import { useQuery } from '@tanstack/react-query';
 
 const Dashboard = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
   const { toast } = useToast();
   
   const [apiConnected, setApiConnected] = useState(false);
+  const [selectedTicker, setSelectedTicker] = useState<Ticker | null>(null);
   
   // Market Barometer data fetch
   const { 
@@ -67,6 +69,14 @@ const Dashboard = () => {
     });
   };
 
+  const handleSelectTicker = (ticker: Ticker) => {
+    setSelectedTicker(ticker);
+    toast({
+      title: "Ticker Selected",
+      description: `Loading prediction data for ${ticker.ticker}`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -104,8 +114,8 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Dashboard Content */}
-        <section className="mb-8">
+        {/* Market Barometer Section */}
+        <section className="mb-12">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Market Barometer</h2>
             {marketData && (
@@ -157,19 +167,20 @@ const Dashboard = () => {
           )}
         </section>
 
-        {/* Demo Section */}
-        <section className="mt-12">
-          <Card>
-            <CardHeader>
-              <CardTitle>Sparkles Demo</CardTitle>
-              <CardDescription>
-                Interactive particle effects demo
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SparklesDemo />
-            </CardContent>
-          </Card>
+        {/* Ticker Search and Prediction Section */}
+        <section className="mb-12">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">Stock Predictions</h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-1">
+              <TickerSearch onSelectTicker={handleSelectTicker} />
+            </div>
+            <div className="lg:col-span-2">
+              <TickerPrediction ticker={selectedTicker} />
+            </div>
+          </div>
         </section>
       </main>
     </div>

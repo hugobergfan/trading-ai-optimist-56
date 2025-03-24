@@ -57,7 +57,9 @@ export function Sparkles({
             enable: true,
             mode: "repulse",
           },
-          resize: true,
+          resize: {
+            enable: true,  // Changed from boolean to object with enable property
+          },
         },
         modes: {
           push: {
