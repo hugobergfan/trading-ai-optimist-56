@@ -69,7 +69,7 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          value_area: particleDensity || 800, // Changed 'area' to 'value_area' to match the API
+          area: particleDensity || 800, // Changed from value_area to area to match the API
         },
         value: 80,
       },

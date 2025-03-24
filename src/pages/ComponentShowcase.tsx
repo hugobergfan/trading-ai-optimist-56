@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, Search } from 'lucide-react';
@@ -197,10 +198,10 @@ const SparklesDemo = () => (
     <Sparkles id="sparkles-1" className="h-40 w-40">
       <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
     </Sparkles>
-    <Sparkles id="sparkles-2" className="h-40 w-40" color="blue">
+    <Sparkles id="sparkles-2" className="h-40 w-40" particleColor="blue">
       <div className="h-20 w-20 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500" />
     </Sparkles>
-    <Sparkles id="sparkles-3" className="h-40 w-40" color="green">
+    <Sparkles id="sparkles-3" className="h-40 w-40" particleColor="green">
       <div className="h-20 w-20 rotate-45 bg-gradient-to-r from-lime-500 to-green-500" />
     </Sparkles>
   </div>
