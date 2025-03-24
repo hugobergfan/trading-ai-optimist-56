@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { Container, tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
@@ -57,9 +56,7 @@ export function Sparkles({
             enable: true,
             mode: "repulse",
           },
-          resize: {
-            enable: true,  // Changed from boolean to object with enable property
-          },
+          resize: true,
         },
         modes: {
           push: {
@@ -83,7 +80,7 @@ export function Sparkles({
           width: 1,
         },
         move: {
-          direction: "none",
+          direction: "none" as const,
           enable: true,
           outModes: {
             default: "bounce",
@@ -115,7 +112,6 @@ export function Sparkles({
     async function initParticles() {
       try {
         if (containerRef.current) {
-          // Fix: Use loadSlim properly
           await loadSlim(tsParticles);
           const instance = await tsParticles.load({
             id,
@@ -151,7 +147,6 @@ export function Sparkles({
       className={`relative isolate overflow-hidden ${className}`}
       aria-hidden="true"
     >
-      {/* Background div with opacity if showBackground is true */}
       {showBackground && (
         <div
           className="absolute inset-0 z-0"
@@ -159,14 +154,12 @@ export function Sparkles({
         />
       )}
 
-      {/* Particles container */}
       <div
         ref={containerRef}
         id={id}
         className="absolute inset-0 z-10"
       />
 
-      {/* Content on top */}
       {children && (
         <div className="relative z-20 flex h-full w-full items-center justify-center">
           {children}

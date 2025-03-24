@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Loader2, TrendingUp, TrendingDown, Calendar } from 'lucide-react';
 import { Ticker, TickerPrediction as TickerPredictionType } from '@/services/sharePredictionsApi';
 import sharePredictionsApi from '@/services/sharePredictionsApi';
+import CompanyPerformanceChart from './CompanyPerformanceChart';
 
 interface TickerPredictionProps {
   ticker: Ticker | null;
@@ -83,86 +84,92 @@ const TickerPrediction = ({ ticker }: TickerPredictionProps) => {
   const isBullish = predictionPercentage > 50;
 
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <span className="text-xl font-bold">{ticker.ticker}</span>
-              <span className="text-sm font-normal text-gray-500">{ticker.name}</span>
-            </CardTitle>
-            <CardDescription>
-              Latest prediction from {prediction.latest_market_date}
-            </CardDescription>
-          </div>
-          <div className={`text-xl font-bold p-2 rounded-full ${isBullish ? 'text-green-600' : 'text-red-600'}`}>
-            {isBullish ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="flex flex-col">
-            <span className="text-sm text-gray-500">Price Increase Likelihood</span>
-            <div className="flex items-baseline">
-              <span className={`text-3xl font-bold ${isBullish ? 'text-green-600' : 'text-red-600'}`}>
-                {predictionPercentage}%
-              </span>
+    <div className="space-y-6">
+      <Card className="h-full">
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <span className="text-xl font-bold">{ticker.ticker}</span>
+                <span className="text-sm font-normal text-gray-500">{ticker.name}</span>
+              </CardTitle>
+              <CardDescription>
+                Latest prediction from {prediction.latest_market_date}
+              </CardDescription>
+            </div>
+            <div className={`text-xl font-bold p-2 rounded-full ${isBullish ? 'text-green-600' : 'text-red-600'}`}>
+              {isBullish ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
             </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm text-gray-500">Reference Price</span>
-            <div className="flex items-baseline">
-              <span className="text-3xl font-bold">${prediction.reference_price.toFixed(2)}</span>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="flex flex-col">
+              <span className="text-sm text-gray-500">Price Increase Likelihood</span>
+              <div className="flex items-baseline">
+                <span className={`text-3xl font-bold ${isBullish ? 'text-green-600' : 'text-red-600'}`}>
+                  {predictionPercentage}%
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-gray-500">Reference Price</span>
+              <div className="flex items-baseline">
+                <span className="text-3xl font-bold">${prediction.reference_price.toFixed(2)}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col">
-            <span className="text-sm text-gray-500">5-Day Volatility</span>
-            <div className="flex items-baseline">
-              <span className="text-xl font-semibold">{(prediction.last_5_days_volatility * 100).toFixed(2)}%</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <span className="text-sm text-gray-500">5-Day Volatility</span>
+              <div className="flex items-baseline">
+                <span className="text-xl font-semibold">{(prediction.last_5_days_volatility * 100).toFixed(2)}%</span>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-gray-500">Valid Until</span>
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-gray-400" />
+                <span className="text-xl font-semibold">{prediction.prediction_valid_until}</span>
+              </div>
             </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm text-gray-500">Valid Until</span>
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-gray-400" />
-              <span className="text-xl font-semibold">{prediction.prediction_valid_until}</span>
-            </div>
-          </div>
-        </div>
 
-        {predictionHistory.length > 0 && (
-          <div className="mt-8">
-            <h4 className="text-sm font-semibold mb-3">Historical Predictions</h4>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">Date</th>
-                    <th className="text-right py-2">Likelihood</th>
-                    <th className="text-right py-2">Ref. Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {predictionHistory.map((item, index) => (
-                    <tr key={index} className="border-b border-gray-100">
-                      <td className="py-2">{item.latest_market_date}</td>
-                      <td className={`text-right py-2 ${item.price_increase_likelihood > 0.5 ? 'text-green-600' : 'text-red-600'}`}>
-                        {Math.round(item.price_increase_likelihood * 100)}%
-                      </td>
-                      <td className="text-right py-2">${item.reference_price.toFixed(2)}</td>
+          {predictionHistory.length > 0 && (
+            <div className="mt-8">
+              <h4 className="text-sm font-semibold mb-3">Historical Predictions</h4>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2">Date</th>
+                      <th className="text-right py-2">Likelihood</th>
+                      <th className="text-right py-2">Ref. Price</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {predictionHistory.map((item, index) => (
+                      <tr key={index} className="border-b border-gray-100">
+                        <td className="py-2">{item.latest_market_date}</td>
+                        <td className={`text-right py-2 ${item.price_increase_likelihood > 0.5 ? 'text-green-600' : 'text-red-600'}`}>
+                          {Math.round(item.price_increase_likelihood * 100)}%
+                        </td>
+                        <td className="text-right py-2">${item.reference_price.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          )}
+        </CardContent>
+      </Card>
+      
+      {predictionHistory.length > 0 && (
+        <CompanyPerformanceChart predictions={[prediction, ...predictionHistory]} />
+      )}
+    </div>
   );
 };
 
