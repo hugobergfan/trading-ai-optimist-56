@@ -28,7 +28,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative font-light">
       {/* Main header that we just integrated */}
       <Header1 />
       

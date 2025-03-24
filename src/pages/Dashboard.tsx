@@ -219,7 +219,7 @@ const Dashboard = () => {
       setSearchQuery={setSearchQuery}
     >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-4 sm:w-[500px]">
+        <TabsList className="grid grid-cols-4 sm:w-[500px] font-light">
           <TabsTrigger value="overview">Market Overview</TabsTrigger>
           <TabsTrigger value="tickers">Tickers</TabsTrigger>
           <TabsTrigger value="ticker-detail">Predictions</TabsTrigger>
@@ -228,7 +228,7 @@ const Dashboard = () => {
         
         <TabsContent value="overview" className="space-y-8">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Market Barometer</h2>
+            <h2 className="text-xl font-light">Market Barometer</h2>
             {marketData && (
               <div className="text-sm text-gray-500">
                 <p>Latest market date: {marketData.latest_market_date}</p>
@@ -245,7 +245,7 @@ const Dashboard = () => {
             </div>
           ) : isErrorMarket ? (
             <Card className="p-6 bg-red-50 border-red-200">
-              <CardTitle className="text-red-600 mb-2">Error Loading Market Data</CardTitle>
+              <CardTitle className="text-red-600 mb-2 font-light">Error Loading Market Data</CardTitle>
               <CardDescription>
                 The API might be unavailable or you may need to update your API key.
               </CardDescription>
@@ -264,19 +264,19 @@ const Dashboard = () => {
                   title="Overall Market" 
                   percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  trend={isMarketPositive ? "up" : "down"}
+                  direction={isMarketPositive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Top 500 Companies" 
                   percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  trend={isTop500Positive ? "up" : "down"}
+                  direction={isTop500Positive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Penny Stocks" 
                   percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  trend={isPennyStocksPositive ? "up" : "down"}
+                  direction={isPennyStocksPositive ? "up" : "down"}
                 />
               </div>
               
@@ -385,7 +385,7 @@ const Dashboard = () => {
               <AiInsights marketData={marketData} />
             </>
           ) : (
-            <p className="text-center py-10 text-gray-500">No market data available</p>
+            <p className="text-center py-10 text-gray-500 font-light">No market data available</p>
           )}
         </TabsContent>
         
@@ -800,3 +800,4 @@ fetchPredictions();`}
 };
 
 export default Dashboard;
+

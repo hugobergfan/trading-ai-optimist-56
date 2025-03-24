@@ -59,7 +59,7 @@ const StockDashboard = () => {
       setSearchQuery={setSearchQuery}
     >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-3 sm:w-[400px]">
+        <TabsList className="grid grid-cols-3 sm:w-[400px] font-light">
           <TabsTrigger value="market-data">Market Data</TabsTrigger>
           <TabsTrigger value="news">News</TabsTrigger>
           <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
@@ -68,7 +68,7 @@ const StockDashboard = () => {
         <TabsContent value="market-data" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Stock Market Data</CardTitle>
+              <CardTitle className="font-light">Stock Market Data</CardTitle>
               <CardDescription>Real-time and historical stock market data from Alpaca</CardDescription>
             </CardHeader>
             <CardContent>
@@ -80,7 +80,7 @@ const StockDashboard = () => {
         <TabsContent value="news" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Market News</CardTitle>
+              <CardTitle className="font-light">Market News</CardTitle>
               <CardDescription>Latest financial news and updates</CardDescription>
             </CardHeader>
             <CardContent>
@@ -95,12 +95,12 @@ const StockDashboard = () => {
         <TabsContent value="portfolio" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Portfolio Tracking</CardTitle>
+              <CardTitle className="font-light">Portfolio Tracking</CardTitle>
               <CardDescription>Monitor your investments and performance</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center justify-center py-12">
-                <p className="text-muted-foreground mb-4">Portfolio tracking coming soon!</p>
+                <p className="text-muted-foreground mb-4 font-light">Portfolio tracking coming soon!</p>
               </div>
             </CardContent>
           </Card>

@@ -42,9 +42,9 @@ export function Sparkles({
         const tsParticlesModule = await import("@tsparticles/slim");
         const tsParticles = tsParticlesModule.default;
         
-        await tsParticles.loadSlim();
+        await tsParticles.load();
         
-        await tsParticles.loadJSON(id, {
+        await tsParticles.load(id, {
           background: {
             color: {
               value: backgroundColor,
