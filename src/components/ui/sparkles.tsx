@@ -39,11 +39,11 @@ export function Sparkles({
 
     const initParticles = async () => {
       try {
-        const tsParticles = (await import("@tsparticles/slim")).tsParticles;
-        const initParticles = (await import("@tsparticles/slim")).initParticles;
-
-        await initParticles();
-
+        const tsParticlesModule = await import("@tsparticles/slim");
+        const tsParticles = tsParticlesModule.default;
+        
+        await tsParticles.init();
+        
         await tsParticles.load({
           id,
           options: {
@@ -108,9 +108,11 @@ export function Sparkles({
     initParticles();
 
     return () => {
-      const tsParticles = window.tsParticles;
-      if (tsParticles) {
-        tsParticles.destroy(id);
+      if (typeof window !== "undefined") {
+        const tsParticlesModule = window.tsParticles;
+        if (tsParticlesModule) {
+          tsParticlesModule.removeCanvas(id);
+        }
       }
     };
   }, [backgroundColor, id, maxSize, minSize, particleColor, particleDensity, particlesInitialized, speed]);
