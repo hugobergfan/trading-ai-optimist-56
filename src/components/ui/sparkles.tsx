@@ -106,7 +106,7 @@ export function Sparkles({
             },
             detectRetina: true,
           }}
-          particlesInit={particlesInit}
+          init={particlesInit}
         />
       )}
     </div>

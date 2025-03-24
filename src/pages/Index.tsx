@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import { AppleStyleDock } from '@/components/ui/apple-style-dock';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import { NavbarDemo } from '@/components/ui/navbar-demo';
 
 const Index = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
       <Navbar />
+      <NavbarDemo />
       <main className="animate-fade-in">
         <HeroDemo />
         <HowItWorks />

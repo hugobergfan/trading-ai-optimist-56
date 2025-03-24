@@ -25,6 +25,9 @@ export default {
 					'Helvetica Neue', 'sans-serif'
 				],
 			},
+			boxShadow: {
+				'input': '0 2px 4px rgba(0, 0, 0, 0.1), 0 -1px 0px rgba(0, 0, 0, 0.05)', 
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
