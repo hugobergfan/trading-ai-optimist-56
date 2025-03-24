@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, Search } from 'lucide-react';
@@ -84,7 +83,7 @@ const ComponentShowcase = () => {
 
   return (
     <div className="container mx-auto py-16 px-4 relative min-h-screen">
-      <Sparkles />
+      <SparklesDemo />
       
       <div className="max-w-3xl mx-auto mb-12 text-center">
         <h1 className="text-4xl font-bold mb-4">Component Showcase</h1>
@@ -185,5 +184,19 @@ const ComponentShowcase = () => {
     </div>
   );
 };
+
+const SparklesDemo = () => (
+  <div className="flex flex-wrap justify-center gap-10 items-center py-10">
+    <Sparkles id="sparkles-1" className="h-40 w-40">
+      <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
+    </Sparkles>
+    <Sparkles id="sparkles-2" className="h-40 w-40" color="blue">
+      <div className="h-20 w-20 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500" />
+    </Sparkles>
+    <Sparkles id="sparkles-3" className="h-40 w-40" color="green">
+      <div className="h-20 w-20 rotate-45 bg-gradient-to-r from-lime-500 to-green-500" />
+    </Sparkles>
+  </div>
+);
 
 export default ComponentShowcase;
