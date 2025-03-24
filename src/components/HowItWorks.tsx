@@ -4,7 +4,7 @@ import { ChartBar, Brain, CircleDollarSign } from 'lucide-react';
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-800/30 backdrop-blur-sm">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-800/30 backdrop-blur-sm relative z-10">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-white">How It Works</h2>
         
