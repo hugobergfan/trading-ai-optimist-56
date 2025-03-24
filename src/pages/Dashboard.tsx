@@ -29,8 +29,7 @@ import {
   Info,
   Filter
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import PerformanceCard from '@/components/PerformanceCard';
 import TickerSearch from '@/components/TickerSearch';
 import TickerPrediction from '@/components/TickerPrediction';
@@ -50,6 +49,7 @@ import sharePredictionsApi, {
   TickerPrediction as TickerPredictionType 
 } from '@/services/sharePredictionsApi';
 import { useQuery } from '@tanstack/react-query';
+import AiInsights from '@/components/AiInsights';
 
 const Dashboard = () => {
   const { isAuthenticated, logout, userName, apiKey } = useAuth();
@@ -274,19 +274,19 @@ const Dashboard = () => {
                     title="Overall Market" 
                     percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    trend={isMarketPositive ? "up" : "down"}
+                    icon={isMarketPositive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
                   />
                   <PerformanceCard 
                     title="Top 500 Companies" 
                     percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    trend={isTop500Positive ? "up" : "down"}
+                    icon={isTop500Positive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
                   />
                   <PerformanceCard 
                     title="Penny Stocks" 
                     percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                     period="Price Increase Likelihood"
-                    trend={isPennyStocksPositive ? "up" : "down"}
+                    icon={isPennyStocksPositive ? <TrendingUp className="h-8 w-8 text-green-500" /> : <TrendingDown className="h-8 w-8 text-red-500" />}
                   />
                 </div>
                 
@@ -333,6 +333,7 @@ const Dashboard = () => {
                     </div>
                   </CardContent>
                 </Card>
+                <AiInsights marketData={marketData} />
               </>
             ) : (
               <p className="text-center py-10 text-gray-500">No market data available</p>
@@ -598,6 +599,7 @@ const Dashboard = () => {
                     </div>
                   </CardContent>
                 </Card>
+                <AiInsights ticker={selectedTicker.ticker} tickerData={tickerPredictions[0]} />
               </>
             ) : (
               <Card>
