@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
-import { Brain } from 'lucide-react';
-
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -15,18 +14,10 @@ const Navbar = () => {
         setScrolled(false);
       }
     };
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  return (
-    <header 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300",
-        scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-white"
-      )}
-    >
+  return <header className={cn("fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300", scrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-white")}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between">
           {/* Logo on the left */}
@@ -37,7 +28,9 @@ const Navbar = () => {
           </div>
           
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div className="hidden md:flex items-center space-x-6 animate-fade-in" style={{
+          animationDelay: '0.1s'
+        }}>
             <Link to="/about" className="navigation-link font-medium">
               About Us
             </Link>
@@ -50,21 +43,22 @@ const Navbar = () => {
             <Link to="/docs" className="navigation-link font-medium">
               Docs
             </Link>
-            <Link to="/components" className="navigation-link font-medium">
-              Components
-            </Link>
           </div>
           
-          {/* AI Trading Bot Section - replacing the search bar */}
-          <div className="hidden lg:flex items-center space-x-2 flex-1 max-w-md mx-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center px-4 py-2 bg-trading-light-blue rounded-lg text-trading-blue">
-              <Brain className="h-5 w-5 mr-2" />
-              <span className="font-medium">AI-Powered Trading Bot Active</span>
+          {/* Search bar in the middle */}
+          <div className="hidden lg:flex flex-1 max-w-md mx-8 animate-fade-in" style={{
+          animationDelay: '0.2s'
+        }}>
+            <div className="relative w-full transition-all duration-300 hover:shadow-md">
+              
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             </div>
           </div>
           
           {/* Login/Signup buttons on the right */}
-          <div className="hidden md:flex space-x-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="hidden md:flex space-x-4 animate-fade-in" style={{
+          animationDelay: '0.3s'
+        }}>
             <Button variant="ghost" className="text-foreground transition-all duration-300 hover:scale-105" asChild>
               <Link to="/login">Log in</Link>
             </Button>
@@ -80,8 +74,6 @@ const Navbar = () => {
           </button>
         </nav>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navbar;
