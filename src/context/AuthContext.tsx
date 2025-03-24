@@ -1,12 +1,12 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { sharePredictionsApi } from '@/services/sharePredictionsApi';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (apiKey: string) => Promise<boolean>;
+  userName: string | null;
+  login: (name: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -15,40 +15,38 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     // Check if user is already logged in
     const checkAuth = () => {
-      const isLoggedIn = sharePredictionsApi.isLoggedIn();
-      setIsAuthenticated(isLoggedIn);
+      const storedName = localStorage.getItem('userName');
+      if (storedName) {
+        setIsAuthenticated(true);
+        setUserName(storedName);
+      }
       setIsLoading(false);
     };
     
     checkAuth();
   }, []);
 
-  const login = async (apiKey: string): Promise<boolean> => {
+  const login = async (name: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const success = await sharePredictionsApi.login(apiKey);
+      // Store the name in localStorage
+      localStorage.setItem('userName', name);
+      setUserName(name);
+      setIsAuthenticated(true);
       
-      if (success) {
-        setIsAuthenticated(true);
-        toast({
-          title: "Login successful",
-          description: "You have successfully logged in to Share Predictions API.",
-        });
-      } else {
-        toast({
-          title: "Login failed",
-          description: "Invalid API key. Please check your credentials and try again.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Login successful",
+        description: `Welcome, ${name}!`,
+      });
       
       setIsLoading(false);
-      return success;
+      return true;
     } catch (error) {
       setIsLoading(false);
       toast({
@@ -61,8 +59,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    sharePredictionsApi.logout();
+    localStorage.removeItem('userName');
     setIsAuthenticated(false);
+    setUserName(null);
     toast({
       title: "Logged out",
       description: "You have been logged out successfully.",
@@ -70,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, userName, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

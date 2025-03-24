@@ -29,11 +29,25 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sharePredictionsApi, MarketBarometer, TickerPrediction, Ticker } from '@/services/sharePredictionsApi';
-import PerformanceCard from '@/components/PerformanceCard';
 import { format } from 'date-fns';
 
+// Temporarily importing and renaming since we have build errors with PerformanceCard
+const PerformanceCard = ({ title, percentage, period }: { title: string; percentage: number; period: string }) => (
+  <Card>
+    <CardContent className="pt-6">
+      <div className="text-center">
+        <h3 className="text-lg font-medium text-gray-900 mb-2">{title}</h3>
+        <div className={`text-4xl font-bold mb-1 ${percentage > 50 ? 'text-green-600' : 'text-red-600'}`}>
+          {percentage}%
+        </div>
+        <p className="text-sm text-gray-500">{period}</p>
+      </div>
+    </CardContent>
+  </Card>
+);
+
 const Dashboard = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userName } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -190,7 +204,12 @@ const Dashboard = () => {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Share Predictions Dashboard</h1>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Trading Dashboard</h1>
+            {userName && (
+              <p className="text-sm text-gray-600">Welcome, {userName}</p>
+            )}
+          </div>
           <Button onClick={logout} variant="outline">
             <LogOut className="mr-2 h-4 w-4" />
             Logout

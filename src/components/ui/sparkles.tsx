@@ -1,136 +1,169 @@
 
-import React, { useRef, useEffect, useState, FC, ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import React, { useEffect, useRef, useState } from "react";
+import { createRoot } from "react-dom/client";
+import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
-import { useMotionValue, motion, useSpring } from 'framer-motion';
-import type { Container, Engine } from '@tsparticles/engine';
-import type { ISourceOptions } from '@tsparticles/engine';
 
-interface SparklesProps {
-  id?: string;
+export interface SparklesProps {
+  id: string;
+  children?: React.ReactNode;
   className?: string;
+  particleDensity?: number;
   particleColor?: string;
-  particleSize?: number;
-  particleCount?: number;
   minSize?: number;
   maxSize?: number;
   speed?: number;
-  particleDensity?: number;
-  showCursor?: boolean;
-  showBackground?: boolean;
   backgroundColor?: string;
-  children?: ReactNode;
-  particlesOptions?: ISourceOptions;
+  showBackground?: boolean;
 }
 
-export const Sparkles: FC<SparklesProps> = ({
-  id = 'tsparticles',
-  className,
-  particleColor = '#ffffff',
-  particleSize = 2,
-  particleCount = 40,
-  minSize = 0.1,
-  maxSize = 2,
-  speed = 2,
-  particleDensity = 100,
-  showCursor = true,
-  showBackground = false,
-  backgroundColor = 'transparent',
+export function Sparkles({
+  id,
   children,
-  particlesOptions,
-}) => {
+  className,
+  particleDensity = 100,
+  particleColor = "#FFF",
+  minSize = 1,
+  maxSize = 3,
+  speed = 1,
+  backgroundColor = "#000",
+  showBackground = false,
+}: SparklesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [container, setContainer] = useState<Container | null>(null);
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const springOptions = { stiffness: 500, damping: 50 };
-  const followX = useSpring(mouseX, springOptions);
-  const followY = useSpring(mouseY, springOptions);
-  
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { left, top } = containerRef.current?.getBoundingClientRect() || { left: 0, top: 0 };
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  };
 
   useEffect(() => {
-    const loadParticles = async () => {
-      const engine = await loadSlim(id, {
-        particles: {
-          number: {
-            value: particleCount,
-            density: {
-              enable: true,
-              area: particleDensity,
-            },
-          },
-          color: {
-            value: particleColor,
-          },
-          size: {
-            value: { min: minSize, max: maxSize },
-          },
-          move: {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const options: ISourceOptions = {
+      background: {
+        color: {
+          value: backgroundColor,
+        },
+      },
+      fullScreen: {
+        enable: false,
+        zIndex: 1,
+      },
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: {
             enable: true,
-            speed: speed,
-            direction: "none",
-            random: true,
-            straight: false,
-            outModes: "out",
+            mode: "push",
           },
-          opacity: {
-            value: { min: 0.3, max: 0.8 },
+          onHover: {
+            enable: true,
+            mode: "repulse",
+          },
+          resize: true,
+        },
+        modes: {
+          push: {
+            quantity: 4,
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4,
           },
         },
-        background: {
-          color: {
-            value: backgroundColor,
-          },
+      },
+      particles: {
+        color: {
+          value: particleColor,
         },
-        detectRetina: true,
-        ...particlesOptions,
-      });
-      
-      setContainer(engine);
+        links: {
+          color: particleColor,
+          distance: 150,
+          enable: true,
+          opacity: 0.5,
+          width: 1,
+        },
+        move: {
+          direction: "none",
+          enable: true,
+          outModes: {
+            default: "bounce",
+          },
+          random: false,
+          speed: speed,
+          straight: false,
+        },
+        number: {
+          density: {
+            enable: true,
+            area: particleDensity,
+          },
+          value: 80,
+        },
+        opacity: {
+          value: 0.5,
+        },
+        shape: {
+          type: "circle",
+        },
+        size: {
+          value: { min: minSize, max: maxSize },
+        },
+      },
+      detectRetina: true,
     };
-    
-    loadParticles();
-    
+
+    async function initParticles() {
+      try {
+        await loadSlim(id, containerRef.current);
+        const particlesContainer = await loadSlim(id, containerRef.current);
+        setContainer(particlesContainer);
+      } catch (error) {
+        console.error("Error initializing particles:", error);
+      }
+    }
+
+    initParticles();
+
     return () => {
       if (container) {
         container.destroy();
       }
     };
-  }, [particleColor, particleSize, particleCount, id, particleDensity, speed, minSize, maxSize, backgroundColor, particlesOptions]);
+  }, [
+    id,
+    particleColor,
+    particleDensity,
+    minSize,
+    maxSize,
+    speed,
+    backgroundColor,
+  ]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className={cn("relative overflow-hidden", className)}
-      onMouseMove={showCursor ? handleMouseMove : undefined}
-      style={{ background: showBackground ? backgroundColor : 'transparent' }}
+    <div
+      className={`relative isolate overflow-hidden ${className}`}
+      aria-hidden="true"
     >
-      <div id={id} className="absolute top-0 left-0 w-full h-full" />
-      
+      {/* Background div with opacity if showBackground is true */}
+      {showBackground && (
+        <div
+          className="absolute inset-0 z-0"
+          style={{ backgroundColor, opacity: 0.9 }}
+        />
+      )}
+
+      {/* Particles container */}
+      <div
+        ref={containerRef}
+        id={id}
+        className="absolute inset-0 z-10"
+      />
+
+      {/* Content on top */}
       {children && (
-        <div className="relative z-10">
+        <div className="relative z-20 flex h-full w-full items-center justify-center">
           {children}
         </div>
       )}
-      
-      {showCursor && (
-        <motion.div 
-          className="pointer-events-none absolute h-4 w-4 rounded-full bg-white mix-blend-difference"
-          style={{
-            x: followX,
-            y: followY,
-            translateX: '-50%',
-            translateY: '-50%',
-          }}
-        />
-      )}
     </div>
   );
-};
+}

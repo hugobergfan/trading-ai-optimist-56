@@ -6,14 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { ArrowRight, KeyRound } from 'lucide-react';
+import { ArrowRight, User } from 'lucide-react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { TextShimmer } from '@/components/ui/text-shimmer';
 
 const formSchema = z.object({
-  apiKey: z.string().min(1, "API key is required"),
+  name: z.string().min(1, "Name is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -26,14 +26,14 @@ const Login = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      apiKey: '',
+      name: '',
     },
   });
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      const success = await login(values.apiKey);
+      const success = await login(values.name);
       if (success) {
         navigate('/dashboard');
       }
@@ -50,11 +50,11 @@ const Login = () => {
             <TextShimmer 
               className="text-3xl font-semibold [--base-color:theme(colors.blue.600)] [--base-gradient-color:theme(colors.blue.300)]"
             >
-              Share Predictions
+              Trading Dashboard
             </TextShimmer>
           </CardTitle>
           <CardDescription>
-            Enter your API key to access the trading dashboard
+            Enter your name to access the trading dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -62,15 +62,15 @@ const Login = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="apiKey"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>API Key</FormLabel>
+                    <FormLabel>Your Name</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <KeyRound className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input 
-                          placeholder="Enter your API key" 
+                          placeholder="Enter your name" 
                           {...field} 
                           className="pl-10"
                           disabled={isSubmitting}
@@ -94,15 +94,7 @@ const Login = () => {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 text-center text-sm text-muted-foreground">
           <p>
-            Need an API key? Visit your 
-            <a 
-              href="https://www.sharepredictions.com/users/profile/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-blue-600 hover:underline ml-1"
-            >
-              Share Predictions profile
-            </a>
+            Welcome to the Trading Dashboard demo
           </p>
         </CardFooter>
       </Card>
