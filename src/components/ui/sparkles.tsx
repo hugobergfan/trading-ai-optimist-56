@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -68,7 +69,7 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          area: particleDensity || 800,
+          value_area: particleDensity || 800, // Changed 'area' to 'value_area' to match the API
         },
         value: 80,
       },

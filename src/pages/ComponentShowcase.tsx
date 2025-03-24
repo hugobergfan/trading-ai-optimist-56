@@ -9,6 +9,7 @@ import { Pagination } from '@/components/ui/pagination';
 import { PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { toast } from '@/components/ui/use-toast';
 import { Sparkles } from '@/components/ui/sparkles';
+import { GooeyDemo } from "@/components/ui/gooey-filter-demo";
 
 const ComponentShowcase = () => {
   const [searchQuery, setSearchQuery] = useState('hero section');
@@ -181,6 +182,12 @@ const ComponentShowcase = () => {
       </div>
 
       {renderPagination()}
+      
+      {/* Gooey Filter Demo */}
+      <section className="border-t border-border/80 py-10">
+        <h2 className="text-2xl font-bold mb-4">Gooey Filter Demo</h2>
+        <GooeyDemo />
+      </section>
     </div>
   );
 };
