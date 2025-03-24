@@ -1,6 +1,5 @@
 
-import React, { useEffect, useRef, useState } from "react";
-import { Particles, Container, type ISourceOptions, MoveDirection, OutMode } from "@tsparticles/slim";
+import React from "react";
 import { cn } from "@/lib/utils";
 
 export interface SparklesProps {
@@ -26,70 +25,9 @@ export function Sparkles({
   particleDensity = 100,
   children,
 }: SparklesProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [init, setInit] = useState(false);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const options: ISourceOptions = {
-      fullScreen: {
-        enable: false,
-      },
-      fpsLimit: 60,
-      particles: {
-        color: {
-          value: particleColor,
-        },
-        move: {
-          direction: MoveDirection.none,
-          enable: true,
-          outModes: {
-            default: OutMode.out,
-          },
-          random: true,
-          speed: speed,
-          straight: false,
-        },
-        number: {
-          density: {
-            enable: true,
-            area: particleDensity,
-          },
-          value: 400,
-        },
-        opacity: {
-          value: 0.5,
-        },
-        shape: {
-          type: "circle",
-        },
-        size: {
-          value: { min: minSize, max: maxSize },
-        },
-      },
-      detectRetina: true,
-    };
-
-    const initParticles = async () => {
-      await Particles.init();
-      await Container.create(id, options);
-      setInit(true);
-    };
-
-    if (!init) {
-      initParticles();
-    }
-
-    return () => {
-      Container.destroy(id);
-    };
-  }, [id, particleColor, minSize, maxSize, speed, particleDensity, init]);
-
   return (
     <div className={cn("relative", className)} style={{ backgroundColor: background }}>
       <div
-        ref={containerRef}
         id={id}
         className="absolute inset-0 w-full h-full"
       />

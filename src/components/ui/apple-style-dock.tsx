@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import { Dock, DockItem, DockIcon, DockLabel } from '@/components/ui/dock';
-import { Torch, Sparkles } from '@/components/ui/sparkles';
 
 export function AppleStyleDock() {
   const [mouseX, setMouseX] = useState(Infinity);
