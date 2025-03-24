@@ -30,6 +30,7 @@ const Index = () => {
     <div className="min-h-screen bg-background relative">
       <Navbar />
       <main className="animate-fade-in">
+        <AuroraBackgroundDemo />
         <HeroSection />
         <HowItWorks />
         <KeyFeatures />
@@ -37,9 +38,6 @@ const Index = () => {
         <PerformanceComparison />
         <FAQ />
         <DisclaimerAndContact />
-        <div className="py-16">
-          <AuroraBackgroundDemo />
-        </div>
         
         {/* Back to top button */}
         <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{ animationDelay: '1.5s' }}>
