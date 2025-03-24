@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sharePredictionsApi, MarketBarometer, TickerPrediction, Ticker } from '@/services/sharePredictionsApi';
-import { PerformanceCard } from '@/components/PerformanceCard';
+import PerformanceCard from '@/components/PerformanceCard';
 import { format } from 'date-fns';
 
 const Dashboard = () => {

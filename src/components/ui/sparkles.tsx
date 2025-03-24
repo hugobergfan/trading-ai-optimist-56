@@ -1,183 +1,136 @@
 
-"use client";
+import React, { useRef, useEffect, useState, FC, ReactNode } from 'react';
+import { cn } from '@/lib/utils';
+import { tsParticles } from '@tsparticles/slim';
+import { useMotionValue, motion, useSpring } from 'framer-motion';
+import type { Container, Engine } from '@tsparticles/engine';
+import type { ISourceOptions } from '@tsparticles/engine';
 
-import React, { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { type ISourceOptions } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
-
-export const SparklesCore = ({
-  id,
-  className,
-  background,
-  minSize,
-  maxSize,
-  particleColor,
-  particleDensity,
-  speed,
-  particleSize,
-  ...props
-}: {
-  id: string;
+interface SparklesProps {
+  id?: string;
   className?: string;
-  background?: string;
+  particleColor?: string;
+  particleSize?: number;
+  particleCount?: number;
   minSize?: number;
   maxSize?: number;
-  particleColor?: string;
-  particleDensity?: number;
   speed?: number;
-  particleSize?: number;
-  [key: string]: any;
-}) => {
-  const [init, setInit] = useState(false);
-  
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
+  particleDensity?: number;
+  showCursor?: boolean;
+  showBackground?: boolean;
+  backgroundColor?: string;
+  children?: ReactNode;
+  particlesOptions?: ISourceOptions;
+}
 
-  const particlesOptions: ISourceOptions = {
-    background: {
-      color: {
-        value: background || "#0d47a1",
-      },
-    },
-    fullScreen: {
-      enable: false,
-      zIndex: 1,
-    },
-    fpsLimit: 120,
-    particles: {
-      color: {
-        value: particleColor || "#ffffff",
-      },
-      move: {
-        enable: true,
-        direction: "none",
-        outModes: {
-          default: "out",
-        },
-        random: false,
-        speed: speed || 2,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          // Remove the typed property and use a more generic approach
-          value: particleDensity || 800,
-        },
-        value: 80,
-      },
-      opacity: {
-        value: 0.5,
-      },
-      size: {
-        value: { min: minSize || 1, max: maxSize || 3 },
-      },
-    },
+export const Sparkles: FC<SparklesProps> = ({
+  id = 'tsparticles',
+  className,
+  particleColor = '#ffffff',
+  particleSize = 2,
+  particleCount = 40,
+  minSize = 0.1,
+  maxSize = 2,
+  speed = 2,
+  particleDensity = 100,
+  showCursor = true,
+  showBackground = false,
+  backgroundColor = 'transparent',
+  children,
+  particlesOptions,
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [container, setContainer] = useState<Container | null>(null);
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springOptions = { stiffness: 500, damping: 50 };
+  const followX = useSpring(mouseX, springOptions);
+  const followY = useSpring(mouseY, springOptions);
+  
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { left, top } = containerRef.current?.getBoundingClientRect() || { left: 0, top: 0 };
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
   };
 
+  useEffect(() => {
+    const loadParticles = async () => {
+      const engine = await tsParticles.load(id, {
+        particles: {
+          number: {
+            value: particleCount,
+            density: {
+              enable: true,
+              area: particleDensity,
+            },
+          },
+          color: {
+            value: particleColor,
+          },
+          size: {
+            value: { min: minSize, max: maxSize },
+          },
+          move: {
+            enable: true,
+            speed: speed,
+            direction: "none",
+            random: true,
+            straight: false,
+            outModes: "out",
+          },
+          opacity: {
+            value: { min: 0.3, max: 0.8 },
+          },
+        },
+        background: {
+          color: {
+            value: backgroundColor,
+          },
+        },
+        detectRetina: true,
+        ...particlesOptions,
+      });
+      
+      setContainer(engine);
+    };
+    
+    loadParticles();
+    
+    return () => {
+      if (container) {
+        container.destroy();
+      }
+    };
+  }, [particleColor, particleSize, particleCount, id, particleDensity, speed, minSize, maxSize, backgroundColor, particlesOptions]);
+
   return (
-    <div className={cn("h-full w-full", className)}>
-      {init && (
-        <Particles
-          id={id}
-          className={cn("h-full w-full")}
-          options={particlesOptions}
+    <div 
+      ref={containerRef} 
+      className={cn("relative overflow-hidden", className)}
+      onMouseMove={showCursor ? handleMouseMove : undefined}
+      style={{ background: showBackground ? backgroundColor : 'transparent' }}
+    >
+      <div id={id} className="absolute top-0 left-0 w-full h-full" />
+      
+      {children && (
+        <div className="relative z-10">
+          {children}
+        </div>
+      )}
+      
+      {showCursor && (
+        <motion.div 
+          className="pointer-events-none absolute h-4 w-4 rounded-full bg-white mix-blend-difference"
+          style={{
+            x: followX,
+            y: followY,
+            translateX: '-50%',
+            translateY: '-50%',
+          }}
         />
       )}
     </div>
   );
 };
-
-export const Sparkles = ({
-  children,
-  className,
-  ...props
-}: {
-  children?: React.ReactNode;
-  className?: string;
-  id?: string;
-  background?: string;
-  minSize?: number;
-  maxSize?: number;
-  particleColor?: string;
-  particleDensity?: number;
-  speed?: number;
-  particleSize?: number;
-}) => {
-  return (
-    <div className={cn("relative h-full w-full", className)}>
-      <SparklesCore
-        id="tsparticles"
-        className="absolute inset-0 h-full w-full"
-        {...props}
-      />
-      {children}
-    </div>
-  );
-};
-
-export const Torch = ({ size = 300, className, ...rest }: { size?: number; className?: string; children?: React.ReactNode }) => {
-  const { elapsed } = useTime();
-  const ref = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setPosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    }
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      className={cn("relative h-full w-full overflow-hidden", className)}
-      {...rest}
-    >
-      <motion.div
-        className="absolute pointer-events-none overflow-hidden"
-        style={{
-          left: position.x ? position.x - size / 2 : 0,
-          top: position.y ? position.y - size / 2 : 0,
-          width: size,
-          height: size,
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.8) 0%, transparent 60%)",
-          filter: "blur(8px)",
-        }}
-      />
-
-      {rest.children}
-    </motion.div>
-  );
-};
-
-function useTime() {
-  const [elapsed, setElapsed] = useState(0);
-  useEffect(() => {
-    let animationFrame: number;
-    let startTime: number;
-
-    const onFrame = () => {
-      setElapsed((Date.now() - startTime) / 1000);
-      animationFrame = requestAnimationFrame(onFrame);
-    };
-
-    startTime = Date.now();
-    animationFrame = requestAnimationFrame(onFrame);
-    return () => cancelAnimationFrame(animationFrame);
-  }, []);
-  return { elapsed };
-}
