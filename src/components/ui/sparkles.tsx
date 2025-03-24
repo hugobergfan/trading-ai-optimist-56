@@ -48,7 +48,7 @@ export function Sparkles({
       },
       move: {
         enable: true,
-        direction: "none",
+        direction: "none", // Using "none" as it's one of the valid enum values
         speed: {
           min: minSpeed || speed / 10,
           max: speed,
