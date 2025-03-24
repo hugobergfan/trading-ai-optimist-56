@@ -69,7 +69,8 @@ export const SparklesCore = ({
       number: {
         density: {
           enable: true,
-          area: particleDensity || 800, // Changed from value_area to area to match the API
+          // Remove the typed property and use a more generic approach
+          value: particleDensity || 800,
         },
         value: 80,
       },
