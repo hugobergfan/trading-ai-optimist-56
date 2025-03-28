@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, RefreshCw, Search, BarChart, Info, Home, TrendingUp, LayoutDashboard, Menu, FileText } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Banner } from '@/components/ui/banner';
 import { useAuth } from '@/context/AuthContext';
 import { SidebarProvider, Sidebar, SidebarContent, SidebarTrigger, SidebarHeader, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from '@/components/ui/sidebar';
 import { toast } from 'sonner';
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
   onRefresh?: () => void;
@@ -14,6 +16,7 @@ interface DashboardLayoutProps {
   searchQuery?: string;
   setSearchQuery?: (query: string) => void;
 }
+
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   children,
   onRefresh,
@@ -27,17 +30,20 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     userName
   } = useAuth();
   const navigate = useNavigate();
+  
   const handleRefresh = () => {
     if (onRefresh) {
       onRefresh();
       toast.success("Refreshing data");
     }
   };
+  
   const handleSearch = () => {
     if (onSearch) {
       onSearch(searchQuery);
     }
   };
+
   return <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
         <Sidebar variant="floating">
@@ -88,8 +94,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   </SidebarMenuItem>
                   
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="API Docs" isActive={window.location.pathname === '/api-docs'}>
-                      
+                    <SidebarMenuButton asChild tooltip="Predictions" isActive={window.location.pathname === '/predictions'}>
+                      <a href="/predictions" onClick={e => {
+                      e.preventDefault();
+                      navigate('/predictions');
+                    }}>
+                        <BarChart />
+                        <span>Predictions</span>
+                      </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -139,4 +151,5 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       </div>
     </SidebarProvider>;
 };
+
 export default DashboardLayout;

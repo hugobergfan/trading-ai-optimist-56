@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import ComponentShowcase from "./pages/ComponentShowcase";
 import ApiDocumentation from "./pages/ApiDocumentation";
 import PaymentsPage from "./pages/Payments";
+import Predictions from "./pages/Predictions";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient({
@@ -37,7 +38,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/stocks" element={<StockDashboard />} />
-              <Route path="/predictions" element={<Dashboard />} />
+              <Route path="/predictions" element={<Predictions />} />
               <Route path="/api-docs" element={<ApiDocumentation />} />
               <Route path="/components" element={<ComponentShowcase />} />
               <Route path="/payments" element={<PaymentsPage />} />
