@@ -1,39 +1,12 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  LogOut, 
-  RefreshCw, 
-  Search,
-  BarChart,
-  Info,
-  Home,
-  TrendingUp,
-  LayoutDashboard,
-  Menu,
-  FileText,
-} from 'lucide-react';
+import { LogOut, RefreshCw, Search, BarChart, Info, Home, TrendingUp, LayoutDashboard, Menu, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Banner } from '@/components/ui/banner';
 import { useAuth } from '@/context/AuthContext';
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarContent,
-  SidebarTrigger,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarInset,
-} from '@/components/ui/sidebar';
+import { SidebarProvider, Sidebar, SidebarContent, SidebarTrigger, SidebarHeader, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from '@/components/ui/sidebar';
 import { toast } from 'sonner';
-
 interface DashboardLayoutProps {
   children: React.ReactNode;
   onRefresh?: () => void;
@@ -41,32 +14,31 @@ interface DashboardLayoutProps {
   searchQuery?: string;
   setSearchQuery?: (query: string) => void;
 }
-
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ 
-  children, 
-  onRefresh, 
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+  children,
+  onRefresh,
   onSearch,
   searchQuery = '',
-  setSearchQuery = () => {},
+  setSearchQuery = () => {}
 }) => {
-  const { isAuthenticated, logout, userName } = useAuth();
+  const {
+    isAuthenticated,
+    logout,
+    userName
+  } = useAuth();
   const navigate = useNavigate();
-  
   const handleRefresh = () => {
     if (onRefresh) {
       onRefresh();
       toast.success("Refreshing data");
     }
   };
-
   const handleSearch = () => {
     if (onSearch) {
       onSearch(searchQuery);
     }
   };
-
-  return (
-    <SidebarProvider>
+  return <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
         <Sidebar variant="floating">
           <SidebarHeader className="flex flex-col items-center justify-center p-4">
@@ -81,7 +53,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Home">
-                      <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
+                      <a href="/" onClick={e => {
+                      e.preventDefault();
+                      navigate('/');
+                    }}>
                         <Home />
                         <span>Home</span>
                       </a>
@@ -90,7 +65,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard" isActive={window.location.pathname === '/dashboard'}>
-                      <a href="/dashboard" onClick={(e) => { e.preventDefault(); navigate('/dashboard'); }}>
+                      <a href="/dashboard" onClick={e => {
+                      e.preventDefault();
+                      navigate('/dashboard');
+                    }}>
                         <LayoutDashboard />
                         <span>Dashboard</span>
                       </a>
@@ -99,7 +77,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Stocks" isActive={window.location.pathname === '/stocks'}>
-                      <a href="/stocks" onClick={(e) => { e.preventDefault(); navigate('/stocks'); }}>
+                      <a href="/stocks" onClick={e => {
+                      e.preventDefault();
+                      navigate('/stocks');
+                    }}>
                         <TrendingUp />
                         <span>Stock Data</span>
                       </a>
@@ -108,10 +89,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                   
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="API Docs" isActive={window.location.pathname === '/api-docs'}>
-                      <a href="/api-docs" onClick={(e) => { e.preventDefault(); navigate('/api-docs'); }}>
-                        <FileText />
-                        <span>API Documentation</span>
-                      </a>
+                      
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -120,11 +98,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </SidebarContent>
           
           <SidebarFooter className="p-4">
-            {userName && (
-              <div className="text-xs text-muted-foreground mb-2">
+            {userName && <div className="text-xs text-muted-foreground mb-2">
                 Logged in as: {userName}
-              </div>
-            )}
+              </div>}
             <Button onClick={logout} variant="outline" size="sm" className="w-full">
               <LogOut className="mr-2 h-4 w-4" />
               Logout
@@ -133,12 +109,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         </Sidebar>
         
         <SidebarInset>
-          <Banner
-            id="welcome-banner"
-            message="🔮 Welcome to Share Predictions Dashboard! Get real-time market insights powered by AI."
-            variant="rainbow"
-            height="2.5rem"
-          />
+          <Banner id="welcome-banner" message="🔮 Welcome to Share Predictions Dashboard! Get real-time market insights powered by AI." variant="rainbow" height="2.5rem" />
           <header className="bg-white shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
               <div className="flex items-center">
@@ -148,20 +119,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
               
               <div className="flex items-center gap-3">
                 <div className="relative max-w-xs">
-                  <Input
-                    type="text"
-                    placeholder="Search tickers..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    className="pr-10"
-                  />
-                  <Button 
-                    size="icon" 
-                    variant="ghost" 
-                    className="absolute right-0 top-0 h-full"
-                    onClick={handleSearch}
-                  >
+                  <Input type="text" placeholder="Search tickers..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSearch()} className="pr-10" />
+                  <Button size="icon" variant="ghost" className="absolute right-0 top-0 h-full" onClick={handleSearch}>
                     <Search className="h-4 w-4" />
                   </Button>
                 </div>
@@ -178,8 +137,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </main>
         </SidebarInset>
       </div>
-    </SidebarProvider>
-  );
+    </SidebarProvider>;
 };
-
 export default DashboardLayout;
