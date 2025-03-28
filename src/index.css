@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -87,13 +88,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-light;
+    @apply bg-background text-foreground font-extralight;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-light tracking-wide;
+    @apply font-extralight tracking-wide;
   }
   p, span, div, button, a {
-    @apply font-light;
+    @apply font-extralight;
   }
 }
 

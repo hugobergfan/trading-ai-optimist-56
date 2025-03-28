@@ -31,8 +31,9 @@ export default {
 			},
 			fontWeight: {
 				thin: '200',
+				extralight: '200',
 				light: '300',
-				normal: '400',
+				normal: '300',
 			},
 			boxShadow: {
 				'input': '0 2px 4px rgba(0, 0, 0, 0.1), 0 -1px 0px rgba(0, 0, 0, 0.05)', 
