@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { HeroDemo } from '@/components/HeroDemo';
 import HowItWorks from '@/components/HowItWorks';
@@ -13,12 +12,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
 import { Header1 } from '@/components/ui/header';
 import { toast } from 'sonner';
-
 const Index = () => {
   useEffect(() => {
     document.title = 'Finox.ai - Research-Backed Trading Analysis';
   }, []);
-  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -26,9 +23,7 @@ const Index = () => {
     });
     toast.success("Scrolled to top!");
   };
-  
-  return (
-    <div className="min-h-screen bg-background relative font-extralight">
+  return <div className="min-h-screen bg-background relative font-extralight">
       {/* Main header */}
       <Header1 />
       
@@ -45,22 +40,14 @@ const Index = () => {
           
           {/* Back to top button */}
           <div className="fixed bottom-8 right-8 z-40 animate-fade-in" style={{
-            animationDelay: '1.5s'
-          }}>
-            <Button 
-              size="icon" 
-              className="rounded-full shadow-lg" 
-              onClick={scrollToTop}
-            >
-              <ArrowUp className="h-5 w-5" />
-            </Button>
+          animationDelay: '1.5s'
+        }}>
+            
           </div>
         </main>
         <Footer />
         <AppleStyleDock />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
