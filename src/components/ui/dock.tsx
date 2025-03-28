@@ -1,6 +1,4 @@
 
-// Fix for the dock.tsx file
-
 import * as React from "react";
 import { useMotionValue, motion, MotionValue, SpringOptions } from "framer-motion";
 
@@ -57,37 +55,26 @@ export const DockProvider = ({ children, value }: DockProviderProps) => {
 };
 
 // Dock component
-export const Dock = ({ children, ...props }: React.ComponentPropsWithoutRef<"div">) => {
+export const Dock: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   return <DockProvider>{children}</DockProvider>;
 };
 
-// DockCard component
-export const DockCard = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof motion.div>) => {
+// DockItem component
+export const DockItem: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   return (
-    <motion.div
-      style={{ height: "auto", width: 50, overflow: "hidden" }}
-      className="dock-card"
-      {...props}
-    >
+    <div className="flex flex-col items-center justify-center relative">
       {children}
-    </motion.div>
+    </div>
   );
 };
 
 // DockIcon component
-export const DockIcon = ({
-  icon,
-  size = 40,
-  onClick,
-  ...props
-}: {
-  icon: React.ReactNode;
-  size?: number;
+interface DockIconProps {
+  children?: React.ReactNode;
   onClick?: () => void;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+}
+
+export const DockIcon: React.FC<DockIconProps> = ({ children, onClick }) => {
   const { mouseX, spring, magnification, distance } = useDock();
   const ref = React.useRef<HTMLDivElement>(null);
   const [hover, setHover] = React.useState(false);
@@ -108,6 +95,7 @@ export const DockIcon = ({
   }, [iconCenter]);
 
   // Calculate the size of the icon based on the mouse position
+  const size = 36; // Default size
   const iconSize = React.useMemo(() => {
     return mouseX.get() === 0
       ? size
@@ -140,67 +128,17 @@ export const DockIcon = ({
       animate={{ width: hover ? iconSize : size, height: hover ? iconSize : size }}
       transition={{ type: "spring", ...spring }}
       className="cursor-pointer rounded-lg flex items-center justify-center"
-      {...props}
     >
-      {icon}
+      {children}
     </motion.div>
   );
 };
 
-// DockIconContainer component
-export const DockIconContainer = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) => {
-  const { mouseX } = useDock();
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-  };
-
+// DockLabel component
+export const DockLabel: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   return (
-    <div
-      ref={ref}
-      className="flex items-center gap-2 h-16 px-2 rounded-md backdrop-blur-md"
-      style={{
-        background: "rgba(229, 231, 235, 0.7)",
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
+    <div className="absolute -top-8 bg-black bg-opacity-80 text-white px-2 py-1 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity">
       {children}
     </div>
   );
 };
-
-// DockTooltip component
-export const DockTooltip = ({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) => {
-  return (
-    <div
-      className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 rounded-md backdrop-blur-md"
-      style={{ background: "rgba(229, 231, 235, 0.7)" }}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Just making sure everything has the right types
-export type DockType = typeof Dock;
-export type DockIconType = typeof DockIcon;
-export type DockCardType = typeof DockCard;
-export type DockIconContainerType = typeof DockIconContainer;
-export type DockTooltipType = typeof DockTooltip;

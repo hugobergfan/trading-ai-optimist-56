@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import { Dock, DockItem, DockIcon, DockLabel } from '@/components/ui/dock';
-import { Sparkles } from '@/components/ui/sparkles';
 import { BarChart, Home, BookOpen, Users } from 'lucide-react';
 import { toast } from 'sonner';
 
