@@ -13,6 +13,8 @@ type SparklesProps = {
   speed?: number;
   particleColor?: string;
   particleDensity?: number;
+  children?: React.ReactNode;
+  showBackground?: boolean;
 };
 
 export const Sparkles = React.memo(({
@@ -24,6 +26,8 @@ export const Sparkles = React.memo(({
   speed = 3,
   particleColor = "#ffffff",
   particleDensity = 100,
+  children,
+  showBackground = false,
 }: SparklesProps) => {
   const [init, setInit] = useState(false);
   
@@ -60,7 +64,11 @@ export const Sparkles = React.memo(({
             enable: true,
             mode: "repulse",
           },
-          resize: true,
+          resize: {
+            enable: true,
+            delay: 0,
+            factor: 1
+          }
         },
         modes: {
           push: {
@@ -114,16 +122,21 @@ export const Sparkles = React.memo(({
     };
   }, [background, minSize, maxSize, speed, particleColor, particleDensity]);
 
-  if (!init) return null;
+  if (!init) return <div className={className}>{children}</div>;
 
   return (
-    <div className={className}>
+    <div className={className} style={{ position: 'relative' }}>
       <Particles
         id={id || "tsparticles"}
-        className="h-full w-full"
+        className="h-full w-full absolute top-0 left-0"
         particlesLoaded={particlesLoaded}
         options={options}
       />
+      {children && (
+        <div className="relative z-10 h-full w-full flex items-center justify-center">
+          {children}
+        </div>
+      )}
     </div>
   );
 });

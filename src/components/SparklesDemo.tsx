@@ -7,7 +7,7 @@ const SparklesDemo = () => (
     <Sparkles 
       id="sparkles-1" 
       className="h-40 w-40" 
-      backgroundColor="#000000"
+      background="#000000"
       particleColor="#ffffff"
       minSize={0.5}
       maxSize={1.5}
@@ -21,7 +21,7 @@ const SparklesDemo = () => (
     <Sparkles 
       id="sparkles-2" 
       className="h-40 w-40" 
-      backgroundColor="#0a2463"
+      background="#0a2463"
       particleColor="#3e92cc"
       minSize={1}
       maxSize={3}
@@ -35,7 +35,7 @@ const SparklesDemo = () => (
     <Sparkles 
       id="sparkles-3" 
       className="h-40 w-40" 
-      backgroundColor="#541388"
+      background="#541388"
       particleColor="#ff6b6b"
       minSize={1}
       maxSize={4}
