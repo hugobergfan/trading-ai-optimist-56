@@ -10,56 +10,11 @@ export function AppleStyleDock({ className, ...props }: AppleStyleDockProps) {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50 flex justify-center",
+        "mb-4 flex h-16 items-end gap-4 rounded-2xl bg-black/10 px-4 pb-2.5 backdrop-blur dark:bg-white/10",
         className
       )}
       {...props}
-    >
-      <div className="mb-4 flex h-16 items-end gap-4 rounded-2xl bg-black/10 px-4 pb-2.5 backdrop-blur dark:bg-white/10">
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2/2235.png"
-            alt="Finder"
-            className="h-full w-full"
-          />
-        </DockItem>
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/5968/5968770.png"
-            alt="Safari"
-            className="h-full w-full"
-          />
-        </DockItem>
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2/2235.png"
-            alt="Messages"
-            className="h-full w-full"
-          />
-        </DockItem>
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/5968/5968770.png"
-            alt="Mail"
-            className="h-full w-full"
-          />
-        </DockItem>
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2/2235.png"
-            alt="Maps"
-            className="h-full w-full"
-          />
-        </DockItem>
-        <DockItem>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/5968/5968770.png"
-            alt="Photos"
-            className="h-full w-full"
-          />
-        </DockItem>
-      </div>
-    </div>
+    />
   );
 }
 
@@ -126,3 +81,11 @@ export function DockLabel({ className, children, ...props }: DockLabelProps) {
     </div>
   );
 }
+
+// Export all components as named exports
+export { 
+  AppleStyleDock as Dock,
+  DockItem,
+  DockIcon,
+  DockLabel
+};
