@@ -1,127 +1,131 @@
 
-"use client";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { type Container, type ISourceOptions } from "@tsparticles/engine";
+import { loadSlim } from "@tsparticles/slim";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-
-interface SparklesProps {
-  id: string;
+type SparklesProps = {
+  id?: string;
   className?: string;
-  children: React.ReactNode;
-  backgroundColor?: string;
-  particleColor?: string;
-  particleDensity?: number;
-  speed?: number;
+  background?: string;
   minSize?: number;
   maxSize?: number;
-  showBackground?: boolean;
-}
+  speed?: number;
+  particleColor?: string;
+  particleDensity?: number;
+};
 
-export function Sparkles({
+export const Sparkles = React.memo(({
   id,
   className,
-  children,
-  backgroundColor = "transparent",
-  particleColor = "#FFC700",
-  particleDensity = 600,
-  speed = 1,
-  minSize = 1,
-  maxSize = 2,
-  showBackground = false,
-}: SparklesProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [particlesInitialized, setParticlesInitialized] = useState(false);
-
+  background,
+  minSize = 0.6,
+  maxSize = 1.4,
+  speed = 3,
+  particleColor = "#ffffff",
+  particleDensity = 100,
+}: SparklesProps) => {
+  const [init, setInit] = useState(false);
+  
   useEffect(() => {
-    if (typeof window === "undefined" || !containerRef.current || particlesInitialized) {
-      return;
-    }
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
 
-    const initParticles = async () => {
-      try {
-        const tsParticlesModule = await import("@tsparticles/slim");
-        const tsParticles = tsParticlesModule.default;
-        
-        await tsParticles.load();
-        
-        await tsParticles.load(id, {
-          background: {
-            color: {
-              value: backgroundColor,
-            },
-          },
-          fullScreen: {
-            enable: false,
-            zIndex: 0,
-          },
-          fpsLimit: 60,
-          particles: {
-            color: {
-              value: particleColor,
-            },
-            links: {
-              color: particleColor,
-              distance: 80,
-              enable: true,
-              opacity: 0.5,
-              width: 0.5,
-            },
-            move: {
-              direction: "none",
-              enable: true,
-              outModes: {
-                default: "bounce",
-              },
-              random: true,
-              speed: speed,
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: particleDensity,
-              },
-              value: 80,
-            },
-            opacity: {
-              value: 0.5,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: minSize, max: maxSize },
-            },
-          },
-          detectRetina: true,
-        });
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    // container loaded
+  }, []);
 
-        setParticlesInitialized(true);
-      } catch (error) {
-        console.error("Failed to initialize particles:", error);
-      }
+  const options: ISourceOptions = useMemo(() => {
+    return {
+      background: {
+        color: {
+          value: background || "transparent",
+        },
+      },
+      fullScreen: {
+        enable: false,
+      },
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: {
+            enable: true,
+            mode: "push",
+          },
+          onHover: {
+            enable: true,
+            mode: "repulse",
+          },
+          resize: true,
+        },
+        modes: {
+          push: {
+            quantity: 4,
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4,
+          },
+        },
+      },
+      particles: {
+        color: {
+          value: particleColor,
+        },
+        links: {
+          color: particleColor,
+          distance: 150,
+          enable: true,
+          opacity: 0.5,
+          width: 1,
+        },
+        move: {
+          direction: "none",
+          enable: true,
+          outModes: {
+            default: "bounce",
+          },
+          random: false,
+          speed: speed,
+          straight: false,
+        },
+        number: {
+          density: {
+            enable: true,
+            area: particleDensity,
+          },
+          value: 80,
+        },
+        opacity: {
+          value: 0.5,
+        },
+        shape: {
+          type: "circle",
+        },
+        size: {
+          value: { min: minSize, max: maxSize },
+        },
+      },
+      detectRetina: true,
     };
+  }, [background, minSize, maxSize, speed, particleColor, particleDensity]);
 
-    initParticles();
-
-    return () => {
-      if (typeof window !== "undefined") {
-        const tsParticlesModule = window.tsParticles;
-        if (tsParticlesModule) {
-          tsParticlesModule.destroy(id);
-        }
-      }
-    };
-  }, [backgroundColor, id, maxSize, minSize, particleColor, particleDensity, particlesInitialized, speed]);
+  if (!init) return null;
 
   return (
-    <div ref={containerRef} className={cn("relative", className)}>
-      <div
-        id={id}
-        className="absolute inset-0 z-10"
-        style={{ visibility: showBackground ? "visible" : "hidden" }}
+    <div className={className}>
+      <Particles
+        id={id || "tsparticles"}
+        className="h-full w-full"
+        particlesLoaded={particlesLoaded}
+        options={options}
       />
-      <div className="relative z-20 flex items-center justify-center">{children}</div>
     </div>
   );
-}
+});
+
+Sparkles.displayName = "Sparkles";

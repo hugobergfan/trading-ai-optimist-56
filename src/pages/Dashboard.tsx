@@ -219,20 +219,20 @@ const Dashboard = () => {
       setSearchQuery={setSearchQuery}
     >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-4 sm:w-[500px] font-light">
+        <TabsList className="grid grid-cols-4 sm:w-[500px] font-extralight">
           <TabsTrigger value="overview">Market Overview</TabsTrigger>
           <TabsTrigger value="tickers">Tickers</TabsTrigger>
           <TabsTrigger value="ticker-detail">Predictions</TabsTrigger>
-          <TabsTrigger value="documentation">API Docs</TabsTrigger>
+          <TabsTrigger value="documentation">Research</TabsTrigger>
         </TabsList>
         
         <TabsContent value="overview" className="space-y-8">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-light">Market Barometer</h2>
+            <h2 className="text-xl font-extralight">Market Research Insights</h2>
             {marketData && (
               <div className="text-sm text-gray-500">
-                <p>Latest market date: {marketData.latest_market_date}</p>
-                <p>Prediction valid until: {marketData.prediction_valid_until}</p>
+                <p>Latest research date: {marketData.latest_market_date}</p>
+                <p>Analysis valid until: {marketData.prediction_valid_until}</p>
               </div>
             )}
           </div>
@@ -245,9 +245,9 @@ const Dashboard = () => {
             </div>
           ) : isErrorMarket ? (
             <Card className="p-6 bg-red-50 border-red-200">
-              <CardTitle className="text-red-600 mb-2 font-light">Error Loading Market Data</CardTitle>
+              <CardTitle className="text-red-600 mb-2 font-extralight">Error Loading Research Data</CardTitle>
               <CardDescription>
-                The API might be unavailable or you may need to update your API key.
+                Our research database might be temporarily unavailable. Please try again later.
               </CardDescription>
               <Button 
                 variant="outline" 
@@ -264,27 +264,24 @@ const Dashboard = () => {
                   title="Overall Market" 
                   percentage={Math.round(marketData.market_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  direction={isMarketPositive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Top 500 Companies" 
                   percentage={Math.round(marketData.top_500_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  direction={isTop500Positive ? "up" : "down"}
                 />
                 <PerformanceCard 
                   title="Penny Stocks" 
                   percentage={Math.round(marketData.penny_stocks_v_weighted_avg_pred * 100)}
                   period="Price Increase Likelihood"
-                  direction={isPennyStocksPositive ? "up" : "down"}
                 />
               </div>
               
               <Card className="mt-8">
                 <CardHeader>
-                  <CardTitle>Market Trend Analysis</CardTitle>
+                  <CardTitle>Market Analysis Insights</CardTitle>
                   <CardDescription>
-                    Showing prediction trends across different market segments over time
+                    Our research team generates market analyses daily (around 6:00 am EST) on trading days with a 10-day validity period.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -341,15 +338,15 @@ const Dashboard = () => {
               
               <Card className="mt-8">
                 <CardHeader>
-                  <CardTitle>Market Prediction Insights</CardTitle>
+                  <CardTitle>Market Research Insights</CardTitle>
                   <CardDescription>
-                    Predictions are generated daily (around 6:00 am EST) on trading days and are valid for 10 market days.
+                    Our research team provides detailed insights into market trends and predictions, helping you make informed investment decisions.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Understanding the Predictions</h3>
+                      <h3 className="text-lg font-medium mb-2">Understanding the Insights</h3>
                       <p className="text-sm text-gray-600 mb-4">
                         The percentage values represent the likelihood of price increase. A value above 50% forecasts a price increase relative to the reference price, while below 50% indicates a likely decrease.
                       </p>
@@ -367,15 +364,15 @@ const Dashboard = () => {
                       <div className="flex items-start mb-2">
                         <Calendar className="text-blue-600 mr-2 h-5 w-5 mt-0.5" />
                         <div>
-                          <p className="font-medium">Latest Market Date: {marketData.latest_market_date}</p>
-                          <p className="text-sm text-gray-600">The most recent market day used for generating predictions</p>
+                          <p className="font-medium">Latest Research Date: {marketData.latest_market_date}</p>
+                          <p className="text-sm text-gray-600">The most recent research day used for generating insights</p>
                         </div>
                       </div>
                       <div className="flex items-start">
                         <Calendar className="text-purple-600 mr-2 h-5 w-5 mt-0.5" />
                         <div>
                           <p className="font-medium">Valid Until: {marketData.prediction_valid_until}</p>
-                          <p className="text-sm text-gray-600">The expiration date of the prediction validity</p>
+                          <p className="text-sm text-gray-600">The expiration date of the analysis validity</p>
                         </div>
                       </div>
                     </div>
@@ -385,7 +382,7 @@ const Dashboard = () => {
               <AiInsights marketData={marketData} />
             </>
           ) : (
-            <p className="text-center py-10 text-gray-500 font-light">No market data available</p>
+            <p className="text-center py-10 text-gray-500 font-extralight">No research data available</p>
           )}
         </TabsContent>
         
@@ -676,19 +673,19 @@ const Dashboard = () => {
         <TabsContent value="documentation" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>API Documentation</CardTitle>
+              <CardTitle>Research Access Key</CardTitle>
               <CardDescription>
-                Learn how to use the Share Predictions API for your own applications
+                Enter your Share Predictions Research Access Key to access detailed market insights and predictions.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-lg font-medium mb-2">Authentication</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  All API requests require authentication using an API key. Include the following header in all your requests:
+                  All API requests require authentication using a Research Access Key. Include the following header in all your requests:
                 </p>
                 <div className="bg-gray-100 p-4 rounded-md font-mono text-sm mb-2">
-                  Authorization: Api-Key YOUR_API_KEY
+                  Authorization: Research-Access-Key YOUR_RESEARCH_ACCESS_KEY
                 </div>
               </div>
               
@@ -736,7 +733,7 @@ const Dashboard = () => {
 
 url = 'https://www.sharepredictions.com/api/tickers/'
 headers = {
-    'Authorization': 'Api-Key YOUR_API_KEY'
+    'Authorization': 'Research-Access-Key YOUR_RESEARCH_ACCESS_KEY'
 }
 params = {
     'search': 'AAPL'  # Optional
@@ -752,7 +749,7 @@ print(response.json())`}
 {`async function fetchPredictions() {
   const response = await fetch('https://www.sharepredictions.com/api/ticker-predictions/?ticker=AAPL', {
     headers: {
-      'Authorization': 'Api-Key YOUR_API_KEY'
+      'Authorization': 'Research-Access-Key YOUR_RESEARCH_ACCESS_KEY'
     }
   });
   
@@ -773,13 +770,13 @@ fetchPredictions();`}
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" style={{ display: isApiKeyModalOpen ? 'flex' : 'none' }}>
         <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
           <div className="p-6">
-            <h3 className="text-lg font-medium mb-4">Update API Key</h3>
+            <h3 className="text-lg font-medium mb-4">Update Research Access Key</h3>
             <p className="text-sm text-gray-600 mb-4">
-              Enter your Share Predictions API key. You can find this in your account profile at <a href="https://www.sharepredictions.com/users/profile/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">sharepredictions.com</a>.
+              Enter your Share Predictions Research Access Key. You can find this in your account profile at <a href="https://www.sharepredictions.com/users/profile/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">sharepredictions.com</a>.
             </p>
             <Input
               type="text"
-              placeholder="API Key"
+              placeholder="Research Access Key"
               value={newApiKey}
               onChange={(e) => setNewApiKey(e.target.value)}
               className="mb-4"
@@ -800,4 +797,3 @@ fetchPredictions();`}
 };
 
 export default Dashboard;
-
