@@ -1,25 +1,28 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageCircle, AlertTriangle } from 'lucide-react';
 import Button from './Button';
+
 const DisclaimerAndContact = () => {
-  return <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/30">
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Section */}
           <div>
-            <h2 className="text-2xl sm:text-3xl mb-4 flex items-center gap-2 font-extralight">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 flex items-center gap-2">
               <MessageCircle className="w-6 h-6 text-trading-blue" />
               Need Help?
             </h2>
             <Card>
               <CardContent className="pt-6">
-                <p className="mb-4 font-extralight">
+                <p className="mb-4">
                   Our support team is available 24/7 to assist you with any questions or concerns.
                 </p>
                 <div className="flex flex-col space-y-4">
                   <div>
-                    <h3 className="font-extralight">Email Us:</h3>
+                    <h3 className="font-medium">Email Us:</h3>
                     <p className="text-muted-foreground">support@finoxai.com</p>
                   </div>
                   <div>
@@ -65,6 +68,8 @@ const DisclaimerAndContact = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default DisclaimerAndContact;
