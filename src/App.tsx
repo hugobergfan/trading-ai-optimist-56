@@ -13,6 +13,7 @@ import StockDashboard from "./pages/StockDashboard";
 import NotFound from "./pages/NotFound";
 import ComponentShowcase from "./pages/ComponentShowcase";
 import ApiDocumentation from "./pages/ApiDocumentation";
+import PaymentsPage from "./pages/Payments";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient({
@@ -39,6 +40,7 @@ const App = () => {
               <Route path="/predictions" element={<Dashboard />} />
               <Route path="/api-docs" element={<ApiDocumentation />} />
               <Route path="/components" element={<ComponentShowcase />} />
+              <Route path="/payments" element={<PaymentsPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

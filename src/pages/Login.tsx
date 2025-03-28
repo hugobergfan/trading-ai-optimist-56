@@ -46,11 +46,11 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center space-y-1">
-          <CardTitle className="text-2xl font-bold">
+          <CardTitle className="text-2xl font-extralight">
             <TextShimmer 
-              className="text-3xl font-semibold [--base-color:theme(colors.blue.600)] [--base-gradient-color:theme(colors.blue.300)]"
+              className="text-3xl font-extralight [--base-color:theme(colors.blue.600)] [--base-gradient-color:theme(colors.blue.300)]"
             >
-              Trading Dashboard
+              Finox.ai Trading
             </TextShimmer>
           </CardTitle>
           <CardDescription>
@@ -91,10 +91,23 @@ const Login = () => {
               </Button>
             </form>
           </Form>
+          
+          <div className="mt-4 pt-4 border-t text-center">
+            <p className="text-sm text-muted-foreground mb-2 font-extralight">
+              Want to try our premium features?
+            </p>
+            <Button
+              variant="outline"
+              className="w-full font-extralight"
+              onClick={() => navigate('/payments')}
+            >
+              View Premium Plans
+            </Button>
+          </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 text-center text-sm text-muted-foreground">
-          <p>
-            Welcome to the Trading Dashboard demo
+          <p className="font-extralight">
+            Welcome to the Finox.ai Trading dashboard demo
           </p>
         </CardFooter>
       </Card>
