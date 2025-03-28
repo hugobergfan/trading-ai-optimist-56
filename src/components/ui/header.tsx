@@ -103,9 +103,7 @@ function Header1() {
                     <p className="text-3xl font-extralight text-[#00b2ff]">Finox.ai</p>
                 </div>
                 <div className="flex justify-end w-full gap-4">
-                    <Button variant="ghost" className="hidden md:inline font-normal">
-                        Book a demo
-                    </Button>
+                    
                     <div className="border-r hidden md:inline"></div>
                     <Button variant="outline">Sign in</Button>
                     <Button>Get started</Button>
